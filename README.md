@@ -107,6 +107,26 @@ Calculation is based on pure integer arithmetic using the GMT correlation consta
 
 ---
 
+## References
+
+**GMT Correlation Constant**
+
+The GMT constant (584283) establishes the correspondence between Maya Long Count
+and Julian Day Number. Archaeological consensus from three independent researchers:
+
+- Goodman, J. T. (1905). *Maya Dates.*
+- Martínez Hernández, J. (1926). *Diccionario de Motul.*
+- Thompson, J. E. S. (1927). *A Correlation of the Mayan and European Calendars.*
+
+Public domain knowledge; the constant itself is a mathematical fact.
+
+**Calendar Arithmetic**
+
+- Meeus, J. (1998). *Astronomical Algorithms* (2nd ed.). Willmann-Bell, Inc.  
+  Julian Day Number conversion algorithm foundation.
+
+---
+
 ## Issues & Contributing
 
 Found a calculation error or want to add a new language port?
