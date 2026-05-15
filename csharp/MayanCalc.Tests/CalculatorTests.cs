@@ -56,19 +56,19 @@ public class CalculatorTests
         [InlineData(2451545, 11, "Ik'")]   // 2000-01-01
         [InlineData(2447503, 12, "Ajaw")]  // 1988-12-07
         [InlineData(2461176, 9, "Ben")]    // 2026-05-15
-        public void AnchorDates(int jdn, int expectedNumber, string expectedSign)
+        public void AnchorDates(int jdn, int expectedCoefficient, string expectedName)
         {
             var result = Calculator.JdnToTzolkin(jdn);
-            Assert.Equal(expectedNumber, result.Number);
-            Assert.Equal(expectedSign, result.DaySign);
+            Assert.Equal(expectedCoefficient, result.Coefficient);
+            Assert.Equal(expectedName, result.Name);
         }
 
         [Fact]
-        public void NumberIsAlways1To13()
+        public void CoefficientIsAlways1To13()
         {
             for (int i = 0; i < 260; i++)
             {
-                int n = Calculator.JdnToTzolkin(FrankieJdn + i).Number;
+                int n = Calculator.JdnToTzolkin(FrankieJdn + i).Coefficient;
                 Assert.InRange(n, 1, 13);
             }
         }
@@ -90,11 +90,11 @@ public class CalculatorTests
         [InlineData(2451545, 10, "K'ank'in")]  // 2000-01-01
         [InlineData(2447503, 3, "Mak")]        // 1988-12-07
         [InlineData(2461176, 6, "Sip")]        // 2026-05-15
-        public void AnchorDates(int jdn, int expectedDay, string expectedMonth)
+        public void AnchorDates(int jdn, int expectedDay, string expectedMonthName)
         {
             var result = Calculator.JdnToHaab(jdn);
             Assert.Equal(expectedDay, result.Day);
-            Assert.Equal(expectedMonth, result.Month);
+            Assert.Equal(expectedMonthName, result.MonthName);
         }
 
         [Fact]
@@ -164,11 +164,11 @@ public class CalculatorTests
     public class LordOfNightTests
     {
         [Theory]
-        [InlineData(2456283, 1)]  // 2012-12-21 → G1
-        [InlineData(2451545, 6)]  // 2000-01-01 → G6
-        [InlineData(2447503, 5)]  // 1988-12-07 → G5
-        [InlineData(2461176, 7)]  // 2026-05-15 → G7
-        public void AnchorDates(int jdn, int expected)
+        [InlineData(2456283, "G1")]  // 2012-12-21 → G1
+        [InlineData(2451545, "G6")]  // 2000-01-01 → G6
+        [InlineData(2447503, "G5")]  // 1988-12-07 → G5
+        [InlineData(2461176, "G7")]  // 2026-05-15 → G7
+        public void AnchorDates(int jdn, string expected)
         {
             Assert.Equal(expected, Calculator.JdnToLordOfNight(jdn));
         }
@@ -183,16 +183,18 @@ public class CalculatorTests
         }
 
         [Fact]
-        public void ValueIsAlways1To9()
+        public void ValueIsAlwaysG1ToG9()
         {
+            var valid = new System.Collections.Generic.HashSet<string>(
+                System.Linq.Enumerable.Range(1, 9).Select(i => $"G{i}"));
             for (int i = 0; i < 9; i++)
-                Assert.InRange(Calculator.JdnToLordOfNight(FrankieJdn + i), 1, 9);
+                Assert.Contains(Calculator.JdnToLordOfNight(FrankieJdn + i), valid);
         }
 
         [Fact]
         public void CreationDateIsG1()
         {
-            Assert.Equal(1, Calculator.JdnToLordOfNight(Constants.CorrelationJdn));
+            Assert.Equal("G1", Calculator.JdnToLordOfNight(Constants.CorrelationJdn));
         }
     }
 }

@@ -26,8 +26,8 @@ export function jdnToTzolkin(jdn: number): TzolkinDate {
   const number = (((total + 3) % 13) + 13) % 13 + 1
   const signIdx = (((total + 19) % 20) + 20) % 20
   return {
-    number,
-    daySign: TZOLKIN_DAY_SIGNS[signIdx],
+    coefficient: number,
+    name: TZOLKIN_DAY_SIGNS[signIdx],
     daySignNumber: signIdx + 1,
   }
 }
@@ -41,8 +41,8 @@ export function jdnToHaab(jdn: number): HaabDate {
   const haabPos = (((total + 348) % 365) + 365) % 365
   const monthIdx = Math.floor(haabPos / 20)
   return {
-    month: HAAB_MONTHS[monthIdx],
     day: haabPos % 20,
+    monthName: HAAB_MONTHS[monthIdx],
   }
 }
 
@@ -65,9 +65,9 @@ export function jdnToLongCount(jdn: number): LongCount {
 }
 
 /** JDN → Lord of Night G1–G9 (9-day cycle). */
-export function jdnToLordOfNight(jdn: number): number {
+export function jdnToLordOfNight(jdn: number): string {
   const total = jdn - GMT_CORRELATION
-  return ((total % 9) + 9) % 9 + 1
+  return `G${((total % 9) + 9) % 9 + 1}`
 }
 
 /** Gregorian date → complete Maya calendar output. */

@@ -1,8 +1,8 @@
 namespace MayanCalc;
 
-public record TzolkinDate(int Number, string DaySign);
+public record TzolkinDate(int Coefficient, string Name);
 
-public record HaabDate(int Day, string Month);
+public record HaabDate(int Day, string MonthName);
 
 public record LongCount(int Baktun, int Katun, int Tun, int Uinal, int Kin)
 {
@@ -14,5 +14,5 @@ public record MayanDate(
     TzolkinDate Tzolkin,
     HaabDate Haab,
     LongCount LongCount,
-    int LordOfNight
+    string LordOfNight  // "G1"–"G9"
 );

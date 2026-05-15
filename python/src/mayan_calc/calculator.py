@@ -22,8 +22,8 @@ def jdn_to_tzolkin(jdn: int) -> TzolkinDate:
     number = ((kin + 3) % 13) + 1
     sign_idx = (kin + 19) % 20
     return TzolkinDate(
-        number=number,
-        day_sign=TZOLKIN_DAY_SIGNS[sign_idx],
+        coefficient=number,
+        name=TZOLKIN_DAY_SIGNS[sign_idx],
         day_sign_number=sign_idx + 1,
     )
 
@@ -35,7 +35,7 @@ def jdn_to_haab(jdn: int) -> HaabDate:
     """
     haab_kin = (jdn - GMT_CORRELATION + 348) % 365
     month_idx = haab_kin // 20
-    return HaabDate(month=HAAB_MONTHS[month_idx], day=haab_kin % 20)
+    return HaabDate(day=haab_kin % 20, month_name=HAAB_MONTHS[month_idx])
 
 
 def jdn_to_long_count(jdn: int) -> LongCount:
@@ -56,9 +56,9 @@ def jdn_to_long_count(jdn: int) -> LongCount:
     )
 
 
-def jdn_to_lord_of_night(jdn: int) -> int:
+def jdn_to_lord_of_night(jdn: int) -> str:
     """JDN → Lord of Night G1–G9 (9-day cycle)."""
-    return ((jdn - GMT_CORRELATION) % 9) + 1
+    return f"G{((jdn - GMT_CORRELATION) % 9) + 1}"
 
 
 def calculate(year: int, month: int, day: int) -> MayanDate:

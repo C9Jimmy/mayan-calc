@@ -20,9 +20,9 @@ public final class Calculator {
      */
     public static TzolkinDate jdnToTzolkin(int jdn) {
         int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, 260);
-        int number = ((kin + 3) % 13) + 1;
+        int coefficient = ((kin + 3) % 13) + 1;
         int signIdx = (kin + 19) % 20;
-        return new TzolkinDate(number, Constants.TZOLKIN_DAY_SIGNS[signIdx], signIdx + 1);
+        return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS[signIdx], signIdx + 1);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class Calculator {
      */
     public static HaabDate jdnToHaab(int jdn) {
         int haabKin = Math.floorMod(jdn - Constants.GMT_CORRELATION + 348, 365);
-        return new HaabDate(Constants.HAAB_MONTHS[haabKin / 20], haabKin % 20);
+        return new HaabDate(haabKin % 20, Constants.HAAB_MONTHS[haabKin / 20]);
     }
 
     /** JDN → Long Count (baktun.katun.tun.uinal.kin). */
@@ -47,8 +47,8 @@ public final class Calculator {
     }
 
     /** JDN → Lord of Night G1–G9 (9-day cycle). */
-    public static int jdnToLordOfNight(int jdn) {
-        return Math.floorMod(jdn - Constants.GMT_CORRELATION, 9) + 1;
+    public static String jdnToLordOfNight(int jdn) {
+        return "G" + (Math.floorMod(jdn - Constants.GMT_CORRELATION, 9) + 1);
     }
 
     /** Gregorian date → complete Maya calendar output. */

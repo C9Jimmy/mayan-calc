@@ -6,4 +6,9 @@ public record LongCount(int baktun, int katun, int tun, int uinal, int kin) {
     public String display() {
         return baktun + "." + katun + "." + tun + "." + uinal + "." + kin;
     }
+
+    @Override
+    public String toString() {
+        return display();
+    }
 }

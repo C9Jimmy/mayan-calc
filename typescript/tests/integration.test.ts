@@ -12,18 +12,18 @@ describe('calculate — 1988-12-07 (Frankie Fang)', () => {
   })
 
   test('Tzolk\'in 12 Ajaw', () => {
-    expect(result.tzolkin.number).toBe(12)
-    expect(result.tzolkin.daySign).toBe('Ajaw')
+    expect(result.tzolkin.coefficient).toBe(12)
+    expect(result.tzolkin.name).toBe('Ajaw')
     expect(result.tzolkin.daySignNumber).toBe(20)
   })
 
   test('Haab 3 Mak', () => {
-    expect(result.haab.month).toBe('Mak')
+    expect(result.haab.monthName).toBe('Mak')
     expect(result.haab.day).toBe(3)
   })
 
   test('Lord of Night G5', () => {
-    expect(result.lordOfNight).toBe(5)
+    expect(result.lordOfNight).toBe('G5')
   })
 })
 
@@ -36,17 +36,17 @@ describe('calculate — creation date (-3113/8/11)', () => {
   })
 
   test('Tzolk\'in 4 Ajaw', () => {
-    expect(result.tzolkin.number).toBe(4)
-    expect(result.tzolkin.daySign).toBe('Ajaw')
+    expect(result.tzolkin.coefficient).toBe(4)
+    expect(result.tzolkin.name).toBe('Ajaw')
   })
 
   test("Haab 8 Kumk'u", () => {
-    expect(result.haab.month).toBe("Kumk'u")
+    expect(result.haab.monthName).toBe("Kumk'u")
     expect(result.haab.day).toBe(8)
   })
 
   test('Lord of Night G1', () => {
-    expect(result.lordOfNight).toBe(1)
+    expect(result.lordOfNight).toBe('G1')
   })
 })
 
@@ -61,12 +61,12 @@ describe('calculate — 2012-12-21 (Maya calendar turnover)', () => {
   })
 
   test('Tzolk\'in 4 Ajaw', () => {
-    expect(result.tzolkin.number).toBe(4)
-    expect(result.tzolkin.daySign).toBe('Ajaw')
+    expect(result.tzolkin.coefficient).toBe(4)
+    expect(result.tzolkin.name).toBe('Ajaw')
   })
 
   test("Haab 3 K'ank'in", () => {
-    expect(result.haab.month).toBe("K'ank'in")
+    expect(result.haab.monthName).toBe("K'ank'in")
     expect(result.haab.day).toBe(3)
   })
 })
@@ -79,17 +79,17 @@ describe('calculate — 2000-01-01', () => {
   })
 
   test("Tzolk'in 11 Ik'", () => {
-    expect(result.tzolkin.number).toBe(11)
-    expect(result.tzolkin.daySign).toBe("Ik'")
+    expect(result.tzolkin.coefficient).toBe(11)
+    expect(result.tzolkin.name).toBe("Ik'")
   })
 
   test("Haab 10 K'ank'in", () => {
-    expect(result.haab.month).toBe("K'ank'in")
+    expect(result.haab.monthName).toBe("K'ank'in")
     expect(result.haab.day).toBe(10)
   })
 
   test('Lord of Night G6', () => {
-    expect(result.lordOfNight).toBe(6)
+    expect(result.lordOfNight).toBe('G6')
   })
 })
 
@@ -100,8 +100,8 @@ describe('calculate — output shape', () => {
     expect(result).toHaveProperty('haab')
     expect(result).toHaveProperty('longCount')
     expect(result).toHaveProperty('lordOfNight')
-    expect(result.tzolkin).toHaveProperty('number')
-    expect(result.tzolkin).toHaveProperty('daySign')
+    expect(result.tzolkin).toHaveProperty('coefficient')
+    expect(result.tzolkin).toHaveProperty('name')
     expect(result.tzolkin).toHaveProperty('daySignNumber')
     expect(result.longCount).toHaveProperty('display')
   })

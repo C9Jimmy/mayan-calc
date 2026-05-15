@@ -26,20 +26,20 @@ class IntegrationTest {
 
         @Test
         void tzolkin() {
-            assertEquals(4, result.tzolkin().number());
-            assertEquals("Ajaw", result.tzolkin().daySign());
+            assertEquals(4, result.tzolkin().coefficient());
+            assertEquals("Ajaw", result.tzolkin().name());
             assertEquals(20, result.tzolkin().daySignNumber());
         }
 
         @Test
         void haab() {
-            assertEquals("K'ank'in", result.haab().month());
+            assertEquals("K'ank'in", result.haab().monthName());
             assertEquals(3, result.haab().day());
         }
 
         @Test
         void lordOfNight() {
-            assertEquals(1, result.lordOfNight());
+            assertEquals("G1", result.lordOfNight());
         }
     }
 
@@ -57,20 +57,20 @@ class IntegrationTest {
 
         @Test
         void tzolkin() {
-            assertEquals(11, result.tzolkin().number());
-            assertEquals("Ik'", result.tzolkin().daySign());
+            assertEquals(11, result.tzolkin().coefficient());
+            assertEquals("Ik'", result.tzolkin().name());
             assertEquals(2, result.tzolkin().daySignNumber());
         }
 
         @Test
         void haab() {
-            assertEquals("K'ank'in", result.haab().month());
+            assertEquals("K'ank'in", result.haab().monthName());
             assertEquals(10, result.haab().day());
         }
 
         @Test
         void lordOfNight() {
-            assertEquals(6, result.lordOfNight());
+            assertEquals("G6", result.lordOfNight());
         }
     }
 
@@ -88,20 +88,20 @@ class IntegrationTest {
 
         @Test
         void tzolkin() {
-            assertEquals(12, result.tzolkin().number());
-            assertEquals("Ajaw", result.tzolkin().daySign());
+            assertEquals(12, result.tzolkin().coefficient());
+            assertEquals("Ajaw", result.tzolkin().name());
             assertEquals(20, result.tzolkin().daySignNumber());
         }
 
         @Test
         void haab() {
-            assertEquals("Mak", result.haab().month());
+            assertEquals("Mak", result.haab().monthName());
             assertEquals(3, result.haab().day());
         }
 
         @Test
         void lordOfNight() {
-            assertEquals(5, result.lordOfNight());
+            assertEquals("G5", result.lordOfNight());
         }
     }
 
@@ -119,20 +119,20 @@ class IntegrationTest {
 
         @Test
         void tzolkin() {
-            assertEquals(9, result.tzolkin().number());
-            assertEquals("Ben", result.tzolkin().daySign());
+            assertEquals(9, result.tzolkin().coefficient());
+            assertEquals("Ben", result.tzolkin().name());
             assertEquals(13, result.tzolkin().daySignNumber());
         }
 
         @Test
         void haab() {
-            assertEquals("Sip", result.haab().month());
+            assertEquals("Sip", result.haab().monthName());
             assertEquals(6, result.haab().day());
         }
 
         @Test
         void lordOfNight() {
-            assertEquals(7, result.lordOfNight());
+            assertEquals("G7", result.lordOfNight());
         }
     }
 }

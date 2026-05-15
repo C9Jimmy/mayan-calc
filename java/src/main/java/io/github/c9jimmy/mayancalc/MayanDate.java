@@ -5,5 +5,5 @@ public record MayanDate(
     TzolkinDate tzolkin,
     HaabDate haab,
     LongCount longCount,
-    int lordOfNight  // 1–9 (G1–G9)
+    String lordOfNight  // "G1"–"G9"
 ) {}

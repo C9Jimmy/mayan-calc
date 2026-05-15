@@ -75,23 +75,23 @@ def test_long_count_display_format(frankie_jdn):
 def test_tzolkin_creation_date(creation_jdn):
     """Creation date must be 4 Ajaw — the archaeological standard."""
     tz = jdn_to_tzolkin(creation_jdn)
-    assert tz.number == 4
-    assert tz.day_sign == "Ajaw"
+    assert tz.coefficient == 4
+    assert tz.name == "Ajaw"
     assert tz.day_sign_number == 20
 
 
 def test_tzolkin_1988_12_07(frankie_jdn):
     tz = jdn_to_tzolkin(frankie_jdn)
-    assert tz.number == 12
-    assert tz.day_sign == "Ajaw"
+    assert tz.coefficient == 12
+    assert tz.name == "Ajaw"
     assert tz.day_sign_number == 20
 
 
 def test_tzolkin_number_range(frankie_jdn):
-    """Tzolk'in number is always 1-13."""
+    """Tzolk'in coefficient is always 1-13."""
     for offset in range(260):
         tz = jdn_to_tzolkin(frankie_jdn + offset)
-        assert 1 <= tz.number <= 13
+        assert 1 <= tz.coefficient <= 13
 
 
 def test_tzolkin_sign_number_range(frankie_jdn):
@@ -113,13 +113,13 @@ def test_tzolkin_260_day_cycle(frankie_jdn):
 def test_haab_creation_date(creation_jdn):
     """Creation date must be 8 Kumk'u — the archaeological standard."""
     h = jdn_to_haab(creation_jdn)
-    assert h.month == "Kumk'u"
+    assert h.month_name == "Kumk'u"
     assert h.day == 8
 
 
 def test_haab_1988_12_07(frankie_jdn):
     h = jdn_to_haab(frankie_jdn)
-    assert h.month == "Mak"
+    assert h.month_name == "Mak"
     assert h.day == 3
 
 
@@ -140,22 +140,23 @@ def test_haab_day_range(frankie_jdn):
 # ── jdn_to_lord_of_night ─────────────────────────────────────────────────────
 
 def test_lord_of_night_creation_date(creation_jdn):
-    assert jdn_to_lord_of_night(creation_jdn) == 1
+    assert jdn_to_lord_of_night(creation_jdn) == "G1"
 
 
 def test_lord_of_night_1988_12_07(frankie_jdn):
-    assert jdn_to_lord_of_night(frankie_jdn) == 5
+    assert jdn_to_lord_of_night(frankie_jdn) == "G5"
 
 
 def test_lord_of_night_9_day_cycle(creation_jdn):
     for i in range(9):
-        assert jdn_to_lord_of_night(creation_jdn + i) == i + 1
+        assert jdn_to_lord_of_night(creation_jdn + i) == f"G{i + 1}"
 
 
 def test_lord_of_night_range(frankie_jdn):
+    valid = {f"G{i}" for i in range(1, 10)}
     for offset in range(9):
         g = jdn_to_lord_of_night(frankie_jdn + offset)
-        assert 1 <= g <= 9
+        assert g in valid
 
 
 # ── calculate (integration) ──────────────────────────────────────────────────
@@ -168,18 +169,18 @@ def test_calculate_returns_mayan_date():
 def test_calculate_1988_12_07():
     result = calculate(1988, 12, 7)
     assert result.long_count.display == "12.18.15.11.0"
-    assert result.tzolkin.number == 12
-    assert result.tzolkin.day_sign == "Ajaw"
-    assert result.haab.month == "Mak"
+    assert result.tzolkin.coefficient == 12
+    assert result.tzolkin.name == "Ajaw"
+    assert result.haab.month_name == "Mak"
     assert result.haab.day == 3
-    assert result.lord_of_night == 5
+    assert result.lord_of_night == "G5"
 
 
 def test_calculate_creation_date():
     """Full integration: Maya epoch date."""
     result = calculate(-3113, 8, 11)
     assert result.long_count.display == "0.0.0.0.0"
-    assert result.tzolkin.number == 4
-    assert result.tzolkin.day_sign == "Ajaw"
-    assert result.haab.month == "Kumk'u"
+    assert result.tzolkin.coefficient == 4
+    assert result.tzolkin.name == "Ajaw"
+    assert result.haab.month_name == "Kumk'u"
     assert result.haab.day == 8

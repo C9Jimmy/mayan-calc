@@ -5,14 +5,14 @@ export interface BirthInput {
 }
 
 export interface TzolkinDate {
-  readonly number: number;        // 1–13
-  readonly daySign: string;       // e.g. "Ajaw"
+  readonly coefficient: number;   // 1–13
+  readonly name: string;          // e.g. "Ajaw"
   readonly daySignNumber: number; // 1–20, position in the 20-sign cycle
 }
 
 export interface HaabDate {
-  readonly month: string; // e.g. "Mak"
-  readonly day: number;   // 0–19
+  readonly day: number;       // 0–19
+  readonly monthName: string; // e.g. "Mak"
 }
 
 export interface LongCount {
@@ -28,5 +28,5 @@ export interface MayanChart {
   readonly tzolkin: TzolkinDate;
   readonly haab: HaabDate;
   readonly longCount: LongCount;
-  readonly lordOfNight: number; // 1–9 (G1–G9)
+  readonly lordOfNight: string; // "G1"–"G9"
 }

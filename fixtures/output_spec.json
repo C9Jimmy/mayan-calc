@@ -1,0 +1,57 @@
+{
+  "spec_version": "1.0.0",
+  "description": "Canonical output field names for all language implementations",
+  "calculate_output": {
+    "tzolkin": {
+      "coefficient": "int (1–13)",
+      "name": "string (e.g. 'Ajaw')"
+    },
+    "haab": {
+      "day": "int (0–19)",
+      "month_name": "string (e.g. 'K\\'ank\\'in')"
+    },
+    "long_count": {
+      "baktun": "int",
+      "katun": "int",
+      "tun": "int",
+      "uinal": "int",
+      "kin": "int",
+      "display": "string (e.g. '13.0.0.0.0')"
+    },
+    "lord_of_night": "string (e.g. 'G1')"
+  },
+  "anchor_dates": [
+    {
+      "input": { "year": 2012, "month": 12, "day": 21 },
+      "jdn": 2456283,
+      "tzolkin": { "coefficient": 4, "name": "Ajaw" },
+      "haab": { "day": 3, "month_name": "K'ank'in" },
+      "long_count": { "baktun": 13, "katun": 0, "tun": 0, "uinal": 0, "kin": 0, "display": "13.0.0.0.0" },
+      "lord_of_night": "G1"
+    },
+    {
+      "input": { "year": 2000, "month": 1, "day": 1 },
+      "jdn": 2451545,
+      "tzolkin": { "coefficient": 11, "name": "Ik'" },
+      "haab": { "day": 10, "month_name": "K'ank'in" },
+      "long_count": { "baktun": 12, "katun": 19, "tun": 6, "uinal": 15, "kin": 2, "display": "12.19.6.15.2" },
+      "lord_of_night": "G6"
+    },
+    {
+      "input": { "year": 1988, "month": 12, "day": 7 },
+      "jdn": 2447503,
+      "tzolkin": { "coefficient": 12, "name": "Ajaw" },
+      "haab": { "day": 3, "month_name": "Mak" },
+      "long_count": { "baktun": 12, "katun": 18, "tun": 15, "uinal": 11, "kin": 0, "display": "12.18.15.11.0" },
+      "lord_of_night": "G5"
+    },
+    {
+      "input": { "year": 2026, "month": 5, "day": 15 },
+      "jdn": 2461176,
+      "tzolkin": { "coefficient": 9, "name": "Ben" },
+      "haab": { "day": 6, "month_name": "Sip" },
+      "long_count": { "baktun": 13, "katun": 0, "tun": 13, "uinal": 10, "kin": 13, "display": "13.0.13.10.13" },
+      "lord_of_night": "G7"
+    }
+  ]
+}

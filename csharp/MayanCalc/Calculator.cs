@@ -17,9 +17,9 @@ public static class Calculator
     public static TzolkinDate JdnToTzolkin(int jdn)
     {
         int kin = FloorMod(jdn - Constants.CorrelationJdn, 260);
-        int number = (kin + 3) % 13 + 1;
+        int coefficient = (kin + 3) % 13 + 1;
         int nameIdx = (kin + 19) % 20;
-        return new TzolkinDate(number, Constants.TzolkinNames[nameIdx]);
+        return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx]);
     }
 
     public static HaabDate JdnToHaab(int jdn)
@@ -40,8 +40,8 @@ public static class Calculator
         );
     }
 
-    public static int JdnToLordOfNight(int jdn) =>
-        FloorMod(jdn - Constants.CorrelationJdn, 9) + 1;
+    public static string JdnToLordOfNight(int jdn) =>
+        $"G{FloorMod(jdn - Constants.CorrelationJdn, 9) + 1}";
 
     public static MayanDate Calculate(int year, int month, int day)
     {

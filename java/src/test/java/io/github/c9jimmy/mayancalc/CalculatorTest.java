@@ -54,9 +54,9 @@ class CalculatorTest {
     class TzolkinCyclicTests {
 
         @Test
-        void numberIsAlways1to13() {
+        void coefficientIsAlways1to13() {
             for (int i = 0; i < 260; i++) {
-                int n = Calculator.jdnToTzolkin(FRANKIE_JDN + i).number();
+                int n = Calculator.jdnToTzolkin(FRANKIE_JDN + i).coefficient();
                 assertTrue(n >= 1 && n <= 13, "Expected 1–13, got " + n + " at offset " + i);
             }
         }
@@ -141,16 +141,18 @@ class CalculatorTest {
         }
 
         @Test
-        void valueIsAlways1to9() {
+        void valueIsAlwaysG1toG9() {
+            java.util.Set<String> valid = new java.util.HashSet<>();
+            for (int i = 1; i <= 9; i++) valid.add("G" + i);
             for (int i = 0; i < 9; i++) {
-                int g = Calculator.jdnToLordOfNight(FRANKIE_JDN + i);
-                assertTrue(g >= 1 && g <= 9, "Expected 1–9, got " + g);
+                String g = Calculator.jdnToLordOfNight(FRANKIE_JDN + i);
+                assertTrue(valid.contains(g), "Expected G1–G9, got " + g);
             }
         }
 
         @Test
         void creationDateIsG1() {
-            assertEquals(1, Calculator.jdnToLordOfNight(Constants.GMT_CORRELATION));
+            assertEquals("G1", Calculator.jdnToLordOfNight(Constants.GMT_CORRELATION));
         }
     }
 }

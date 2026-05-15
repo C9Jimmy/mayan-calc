@@ -89,36 +89,36 @@ describe('jdnToLongCount', () => {
 describe('jdnToTzolkin', () => {
   test('creation date → 4 Ajaw (archaeological standard)', () => {
     const tz = jdnToTzolkin(CREATION_JDN)
-    expect(tz.number).toBe(4)
-    expect(tz.daySign).toBe('Ajaw')
+    expect(tz.coefficient).toBe(4)
+    expect(tz.name).toBe('Ajaw')
     expect(tz.daySignNumber).toBe(20)
   })
 
   test('1988-12-07 → 12 Ajaw', () => {
     const tz = jdnToTzolkin(FRANKIE_JDN)
-    expect(tz.number).toBe(12)
-    expect(tz.daySign).toBe('Ajaw')
+    expect(tz.coefficient).toBe(12)
+    expect(tz.name).toBe('Ajaw')
     expect(tz.daySignNumber).toBe(20)
   })
 
   test("2000-01-01 → 11 Ik'", () => {
     const tz = jdnToTzolkin(2451545)
-    expect(tz.number).toBe(11)
-    expect(tz.daySign).toBe("Ik'")
+    expect(tz.coefficient).toBe(11)
+    expect(tz.name).toBe("Ik'")
   })
 
   test('260-day cycle is idempotent', () => {
     const base = jdnToTzolkin(FRANKIE_JDN)
     const cycled = jdnToTzolkin(FRANKIE_JDN + 260)
-    expect(cycled.number).toBe(base.number)
-    expect(cycled.daySign).toBe(base.daySign)
+    expect(cycled.coefficient).toBe(base.coefficient)
+    expect(cycled.name).toBe(base.name)
   })
 
-  test('number is always 1–13 over a full 260-day cycle', () => {
+  test('coefficient is always 1–13 over a full 260-day cycle', () => {
     for (let offset = 0; offset < 260; offset++) {
-      const { number } = jdnToTzolkin(FRANKIE_JDN + offset)
-      expect(number).toBeGreaterThanOrEqual(1)
-      expect(number).toBeLessThanOrEqual(13)
+      const { coefficient } = jdnToTzolkin(FRANKIE_JDN + offset)
+      expect(coefficient).toBeGreaterThanOrEqual(1)
+      expect(coefficient).toBeLessThanOrEqual(13)
     }
   })
 
@@ -136,26 +136,26 @@ describe('jdnToTzolkin', () => {
 describe('jdnToHaab', () => {
   test("creation date → 8 Kumk'u (archaeological standard)", () => {
     const h = jdnToHaab(CREATION_JDN)
-    expect(h.month).toBe("Kumk'u")
+    expect(h.monthName).toBe("Kumk'u")
     expect(h.day).toBe(8)
   })
 
   test('1988-12-07 → 3 Mak', () => {
     const h = jdnToHaab(FRANKIE_JDN)
-    expect(h.month).toBe('Mak')
+    expect(h.monthName).toBe('Mak')
     expect(h.day).toBe(3)
   })
 
   test("2000-01-01 → 10 K'ank'in", () => {
     const h = jdnToHaab(2451545)
-    expect(h.month).toBe("K'ank'in")
+    expect(h.monthName).toBe("K'ank'in")
     expect(h.day).toBe(10)
   })
 
   test('365-day cycle is idempotent', () => {
     const base = jdnToHaab(FRANKIE_JDN)
     const cycled = jdnToHaab(FRANKIE_JDN + 365)
-    expect(cycled.month).toBe(base.month)
+    expect(cycled.monthName).toBe(base.monthName)
     expect(cycled.day).toBe(base.day)
   })
 
@@ -172,28 +172,27 @@ describe('jdnToHaab', () => {
 
 describe('jdnToLordOfNight', () => {
   test('creation date → G1', () => {
-    expect(jdnToLordOfNight(CREATION_JDN)).toBe(1)
+    expect(jdnToLordOfNight(CREATION_JDN)).toBe('G1')
   })
 
   test('1988-12-07 → G5', () => {
-    expect(jdnToLordOfNight(FRANKIE_JDN)).toBe(5)
+    expect(jdnToLordOfNight(FRANKIE_JDN)).toBe('G5')
   })
 
   test('2012-12-21 → G1', () => {
-    expect(jdnToLordOfNight(2456283)).toBe(1)
+    expect(jdnToLordOfNight(2456283)).toBe('G1')
   })
 
   test('9-day cycle returns to G1', () => {
     for (let i = 0; i < 9; i++) {
-      expect(jdnToLordOfNight(CREATION_JDN + i)).toBe(i + 1)
+      expect(jdnToLordOfNight(CREATION_JDN + i)).toBe(`G${i + 1}`)
     }
   })
 
-  test('value is always 1–9', () => {
+  test('value is always G1–G9', () => {
+    const valid = new Set(Array.from({ length: 9 }, (_, i) => `G${i + 1}`))
     for (let offset = 0; offset < 9; offset++) {
-      const g = jdnToLordOfNight(FRANKIE_JDN + offset)
-      expect(g).toBeGreaterThanOrEqual(1)
-      expect(g).toBeLessThanOrEqual(9)
+      expect(valid.has(jdnToLordOfNight(FRANKIE_JDN + offset))).toBe(true)
     }
   })
 })
