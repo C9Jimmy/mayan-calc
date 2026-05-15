@@ -84,6 +84,8 @@ println(result.lordOfNight)              // "G1"
 | `long_count` | string | Long Count notation (e.g. `"13.0.0.0.0"`) |
 | `lord_of_night` | string | Lord of Night cycle (e.g. `"G1"`) |
 
+Field names above follow Python conventions (`snake_case`). TypeScript / Kotlin use `camelCase` (`longCount`, `lordOfNight`); Java uses getters (`result.longCount()`); C# uses `PascalCase` (`result.LongCount`).
+
 Full field specification (including per-language accessor names): [`fixtures/output_spec.json`](fixtures/output_spec.json)
 
 ---
@@ -92,8 +94,8 @@ Full field specification (including per-language accessor names): [`fixtures/out
 
 Verified against GMT correlation constant 584283:
 
-| Date       | Tzolk'in  | Haab         | Long Count    | Lord |
-|------------|-----------|--------------|---------------|------|
+| Date       | Tzolk'in  | Haab         | Long Count    | Lord of Night |
+|------------|-----------|--------------|---------------|---------------|
 | 2012-12-21 | 4 Ajaw    | 3 K'ank'in   | 13.0.0.0.0    | G1   |
 | 2000-01-01 | 11 Ik'    | 10 K'ank'in  | 12.19.6.15.2  | G6   |
 | 1988-12-07 | 12 Ajaw   | 3 Mak        | 12.18.15.11.0 | G5   |
@@ -109,20 +111,20 @@ Calculation is based on pure integer arithmetic using the GMT correlation consta
 
 ## References
 
-**GMT Correlation Constant**
+### GMT Correlation Constant
 
 The GMT constant (584283) establishes the correspondence between Maya Long Count
 and Julian Day Number. Archaeological consensus from three independent researchers:
 
-- Goodman, J. T. (1905). *Maya Dates.*
-- Martínez Hernández, J. (1926). *Diccionario de Motul.*
-- Thompson, J. E. S. (1927). *A Correlation of the Mayan and European Calendars.*
+- **Goodman, J. T.** (1905). *Maya Dates.*
+- **Martínez Hernández, J.** (1926). *Diccionario de Motul.*
+- **Thompson, J. E. S.** (1927). *A Correlation of the Mayan and European Calendars.*
 
 Public domain knowledge; the constant itself is a mathematical fact.
 
-**Calendar Arithmetic**
+### Calendar Arithmetic
 
-- Meeus, J. (1998). *Astronomical Algorithms* (2nd ed.). Willmann-Bell, Inc.  
+- **Meeus, J.** (1998). *Astronomical Algorithms* (2nd ed.). Willmann-Bell, Inc.  
   Julian Day Number conversion algorithm foundation.
 
 ---
