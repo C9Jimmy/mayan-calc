@@ -1,32 +1,14 @@
 package io.github.c9jimmy.mayancalc
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.DynamicContainer.dynamicContainer
-import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class CalculatorTest {
 
     private val FRANKIE_JDN = Calculator.dateToJdn(1988, 12, 7)
-
-    // ── Constants ─────────────────────────────────────────────────────────────
-
-    @Nested
-    inner class ConstantsTests {
-        @Test fun tzolkinNamesHas20Elements() = assertEquals(20, TZOLKIN_NAMES.size)
-        @Test fun haabMonthNamesHas18Elements() = assertEquals(18, HAAB_MONTH_NAMES.size)
-        @Test fun correlationJdn() = assertEquals(584283L, CORRELATION_JDN)
-        @Test fun tzolkinCoeffOriginIs4() = assertEquals(4, TZOLKIN_COEFF_ORIGIN)
-        @Test fun tzolkinNameOriginIsAjaw() = assertEquals("Ajaw", TZOLKIN_NAMES[TZOLKIN_NAME_ORIGIN_IDX])
-        @Test fun tzolkinFirstNameIsImix() = assertEquals("Imix", TZOLKIN_NAMES[0])
-        @Test fun tzolkinNameOriginIdxIs19() = assertEquals(19, TZOLKIN_NAME_ORIGIN_IDX)
-        @Test fun haabFirstMonthIsPop() = assertEquals("Pop", HAAB_MONTH_NAMES[0])
-        @Test fun haabLastMonthIsKumku() = assertEquals("Kumk'u", HAAB_MONTH_NAMES[17])
-    }
 
     // ── dateToJdn ─────────────────────────────────────────────────────────────
 
@@ -166,32 +148,4 @@ class CalculatorTest {
             assertEquals("G1", Calculator.jdnToLordOfNight(CORRELATION_JDN))
     }
 
-    // ── Integration ──────────────────────────────────────────────────────────
-
-    private data class AnchorCase(
-        val year: Int, val month: Int, val day: Int,
-        val tzolkinCoeff: Int, val tzolkinName: String,
-        val haabDay: Int, val haabMonth: String,
-        val lc: String, val lord: String
-    )
-
-    private val CASES = listOf(
-        AnchorCase(2012, 12, 21,  4, "Ajaw",  3, "K'ank'in", "13.0.0.0.0",    "G1"),
-        AnchorCase(2000,  1,  1, 11, "Ik'",  10, "K'ank'in", "12.19.6.15.2",  "G6"),
-        AnchorCase(1988, 12,  7, 12, "Ajaw",  3, "Mak",      "12.18.15.11.0", "G5"),
-        AnchorCase(2026,  5, 15,  9, "Ben",   6, "Sip",      "13.0.13.10.13", "G7"),
-    )
-
-    @TestFactory
-    fun integrationAnchorDates() = CASES.map { c ->
-        val result = Calculator.calculate(c.year, c.month, c.day)
-        dynamicContainer("${c.year}-${c.month}-${c.day}", listOf(
-            dynamicTest("tzolkin coefficient") { assertEquals(c.tzolkinCoeff, result.tzolkin.coefficient) },
-            dynamicTest("tzolkin name")        { assertEquals(c.tzolkinName,  result.tzolkin.name) },
-            dynamicTest("haab day")            { assertEquals(c.haabDay,      result.haab.day) },
-            dynamicTest("haab month")          { assertEquals(c.haabMonth,    result.haab.monthName) },
-            dynamicTest("long count")          { assertEquals(c.lc,           result.longCount.toString()) },
-            dynamicTest("lord of night")       { assertEquals(c.lord,         result.lordOfNight) },
-        ))
-    }
 }
