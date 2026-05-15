@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MayanCalc.Tests/MayanCalc.Tests.csproj" />
+  <Project Path="MayanCalc/MayanCalc.csproj" />
+</Solution>
