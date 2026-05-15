@@ -6,3 +6,6 @@ node_modules/
 coverage/
 target/
 *.class
+# C# build artifacts
+csharp/**/bin/
+csharp/**/obj/
