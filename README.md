@@ -1,3 +1,5 @@
+![CI](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml/badge.svg)
+
 # mayan-calc
 
 Zero-dependency Maya calendar library — Tzolk'in, Haab, Long Count, Lord of Night.
