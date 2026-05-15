@@ -1,0 +1,185 @@
+"""
+Tests use two anchor dates:
+- creation_jdn (584283): Maya epoch 0.0.0.0.0 = 4 Ajaw 8 Kumk'u
+- frankie_jdn (2447503): 1988-12-07 = 12.18.15.11.0, 12 Ajaw, 3 Mak, G5
+"""
+import pytest
+
+from mayan_calc.calculator import (
+    calculate,
+    date_to_jdn,
+    jdn_to_haab,
+    jdn_to_long_count,
+    jdn_to_lord_of_night,
+    jdn_to_tzolkin,
+)
+from mayan_calc.models import MayanDate
+
+
+# ── date_to_jdn ──────────────────────────────────────────────────────────────
+
+def test_date_to_jdn_frankie():
+    assert date_to_jdn(1988, 12, 7) == 2447503
+
+
+def test_date_to_jdn_j2000():
+    """J2000.0 epoch — widely used reference."""
+    assert date_to_jdn(2000, 1, 1) == 2451545
+
+
+def test_date_to_jdn_jan_boundary():
+    """month <= 2 branch: year and month are adjusted internally."""
+    assert date_to_jdn(2000, 2, 28) == 2451603
+
+
+def test_date_to_jdn_leap_day():
+    assert date_to_jdn(2000, 2, 29) == 2451604
+
+
+def test_date_to_jdn_creation_epoch():
+    """GMT correlation: Maya 0.0.0.0.0 ↔ JDN 584283."""
+    assert date_to_jdn(-3113, 8, 11) == 584283
+
+
+# ── jdn_to_long_count ────────────────────────────────────────────────────────
+
+def test_long_count_creation_date(creation_jdn):
+    lc = jdn_to_long_count(creation_jdn)
+    assert lc.baktun == 0
+    assert lc.katun == 0
+    assert lc.tun == 0
+    assert lc.uinal == 0
+    assert lc.kin == 0
+    assert lc.display == "0.0.0.0.0"
+
+
+def test_long_count_1988_12_07(frankie_jdn):
+    lc = jdn_to_long_count(frankie_jdn)
+    assert lc.baktun == 12
+    assert lc.katun == 18
+    assert lc.tun == 15
+    assert lc.uinal == 11
+    assert lc.kin == 0
+    assert lc.display == "12.18.15.11.0"
+
+
+def test_long_count_display_format(frankie_jdn):
+    lc = jdn_to_long_count(frankie_jdn)
+    parts = lc.display.split(".")
+    assert len(parts) == 5
+    assert all(p.isdigit() for p in parts)
+
+
+# ── jdn_to_tzolkin ───────────────────────────────────────────────────────────
+
+def test_tzolkin_creation_date(creation_jdn):
+    """Creation date must be 4 Ajaw — the archaeological standard."""
+    tz = jdn_to_tzolkin(creation_jdn)
+    assert tz.number == 4
+    assert tz.day_sign == "Ajaw"
+    assert tz.day_sign_number == 20
+
+
+def test_tzolkin_1988_12_07(frankie_jdn):
+    tz = jdn_to_tzolkin(frankie_jdn)
+    assert tz.number == 12
+    assert tz.day_sign == "Ajaw"
+    assert tz.day_sign_number == 20
+
+
+def test_tzolkin_number_range(frankie_jdn):
+    """Tzolk'in number is always 1-13."""
+    for offset in range(260):
+        tz = jdn_to_tzolkin(frankie_jdn + offset)
+        assert 1 <= tz.number <= 13
+
+
+def test_tzolkin_sign_number_range(frankie_jdn):
+    """day_sign_number cycles 1-20."""
+    for offset in range(260):
+        tz = jdn_to_tzolkin(frankie_jdn + offset)
+        assert 1 <= tz.day_sign_number <= 20
+
+
+def test_tzolkin_260_day_cycle(frankie_jdn):
+    """Full 260-day cycle returns to the same date."""
+    tz_base = jdn_to_tzolkin(frankie_jdn)
+    tz_cycle = jdn_to_tzolkin(frankie_jdn + 260)
+    assert tz_base == tz_cycle
+
+
+# ── jdn_to_haab ──────────────────────────────────────────────────────────────
+
+def test_haab_creation_date(creation_jdn):
+    """Creation date must be 8 Kumk'u — the archaeological standard."""
+    h = jdn_to_haab(creation_jdn)
+    assert h.month == "Kumk'u"
+    assert h.day == 8
+
+
+def test_haab_1988_12_07(frankie_jdn):
+    h = jdn_to_haab(frankie_jdn)
+    assert h.month == "Mak"
+    assert h.day == 3
+
+
+def test_haab_365_day_cycle(frankie_jdn):
+    """Full 365-day Haab cycle returns to the same date."""
+    h_base = jdn_to_haab(frankie_jdn)
+    h_cycle = jdn_to_haab(frankie_jdn + 365)
+    assert h_base == h_cycle
+
+
+def test_haab_day_range(frankie_jdn):
+    """Haab day is 0-19 (Wayeb has 0-4 but we only test general range)."""
+    for offset in range(365):
+        h = jdn_to_haab(frankie_jdn + offset)
+        assert 0 <= h.day <= 19
+
+
+# ── jdn_to_lord_of_night ─────────────────────────────────────────────────────
+
+def test_lord_of_night_creation_date(creation_jdn):
+    assert jdn_to_lord_of_night(creation_jdn) == 1
+
+
+def test_lord_of_night_1988_12_07(frankie_jdn):
+    assert jdn_to_lord_of_night(frankie_jdn) == 5
+
+
+def test_lord_of_night_9_day_cycle(creation_jdn):
+    for i in range(9):
+        assert jdn_to_lord_of_night(creation_jdn + i) == i + 1
+
+
+def test_lord_of_night_range(frankie_jdn):
+    for offset in range(9):
+        g = jdn_to_lord_of_night(frankie_jdn + offset)
+        assert 1 <= g <= 9
+
+
+# ── calculate (integration) ──────────────────────────────────────────────────
+
+def test_calculate_returns_mayan_date():
+    result = calculate(1988, 12, 7)
+    assert isinstance(result, MayanDate)
+
+
+def test_calculate_1988_12_07():
+    result = calculate(1988, 12, 7)
+    assert result.long_count.display == "12.18.15.11.0"
+    assert result.tzolkin.number == 12
+    assert result.tzolkin.day_sign == "Ajaw"
+    assert result.haab.month == "Mak"
+    assert result.haab.day == 3
+    assert result.lord_of_night == 5
+
+
+def test_calculate_creation_date():
+    """Full integration: Maya epoch date."""
+    result = calculate(-3113, 8, 11)
+    assert result.long_count.display == "0.0.0.0.0"
+    assert result.tzolkin.number == 4
+    assert result.tzolkin.day_sign == "Ajaw"
+    assert result.haab.month == "Kumk'u"
+    assert result.haab.day == 8
