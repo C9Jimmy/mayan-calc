@@ -5,7 +5,7 @@ Five native language implementations, zero external dependencies, pure arithmeti
 
 [![CI](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml/badge.svg)](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/C9Jimmy?style=flat&label=Sponsor)](https://github.com/sponsors/C9Jimmy)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/c9jimmy)
 
 ---
 
@@ -133,9 +133,10 @@ Found a calculation error or want to add a new language port?
 
 ## Support
 
-If this library is useful to you:
+If this library saved you from implementing your own Tzolk'in calendar
+arithmetic at 2am, consider buying me a tea. 🍵
 
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/C9Jimmy?style=flat&label=Sponsor%20on%20GitHub)](https://github.com/sponsors/C9Jimmy)
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/c9jimmy)
 
 ---
 
