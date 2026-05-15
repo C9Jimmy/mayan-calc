@@ -1,68 +1,144 @@
-![CI](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml/badge.svg)
-
 # mayan-calc
 
-Zero-dependency Maya calendar library — Tzolk'in, Haab, Long Count, Lord of Night.
+Maya calendar calculation library: Tzolk'in, Haab, Long Count, and Lord of Night.
+Five native language implementations, zero external dependencies, pure arithmetic.
 
-Part of the [multi-system astronomical calculation library](https://github.com/C9Jimmy/celestial-calc) family.
-
-## Installation
-
-```bash
-pip install mayan-calc
-```
-
-## Quick start
-
-```python
-from mayan_calc import calculate
-
-result = calculate(1988, 12, 7)
-
-print(result.long_count.display)       # 12.18.15.11.0
-print(result.tzolkin.number)           # 12
-print(result.tzolkin.day_sign)         # Ajaw
-print(result.haab.month, result.haab.day)  # Mak 3
-print(result.lord_of_night)            # 5
-```
-
-## Output format
-
-```json
-{
-  "tzolkin": { "number": 12, "day_sign": "Ajaw", "day_sign_number": 20 },
-  "haab": { "month": "Mak", "day": 3 },
-  "long_count": {
-    "baktun": 12, "katun": 18, "tun": 15, "uinal": 11, "kin": 0,
-    "display": "12.18.15.11.0"
-  },
-  "lord_of_night": 5
-}
-```
-
-## Design
-
-- Pure date arithmetic — no astronomical dependencies
-- GMT correlation constant: **584283** (Goodman-Martinez-Thompson consensus)
-- Tzolk'in offsets calibrated to 4 Ajaw 8 Kumk'u (Maya creation date 0.0.0.0.0)
-- All data structures are immutable frozen dataclasses
-
-## Development
-
-```bash
-pip install -e ".[dev]"
-python -m pytest tests/ -v --cov=src
-```
-
-## References
-
-- Meeus, J. (1998). *Astronomical Algorithms* (2nd ed.). Willmann-Bell.
-- Thompson, J.E.S. (1927). *A Correlation of the Mayan and European Calendars.*
+[![CI](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml/badge.svg)](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/C9Jimmy?style=flat&label=Sponsor)](https://github.com/sponsors/C9Jimmy)
 
 ---
 
-> This library is a pure mathematical implementation of the Maya calendar system for
-> educational and research purposes.
-> All algorithms are based on published archaeological and astronomical literature.
+## Language Support
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+| Language   | Install / Dependency                              | Tests |
+|------------|---------------------------------------------------|-------|
+| Python     | `pip install mayan-calc`                          | 31 ✅  |
+| TypeScript | `npm install mayan-calc`                          | 52 ✅  |
+| Java       | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 41 ✅  |
+| C#         | NuGet: `MayanCalc`                                | 43 ✅  |
+| Kotlin     | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 55 ✅  |
+
+---
+
+## Quick Start
+
+**Python**
+```python
+from mayan_calc import calculate
+
+result = calculate(2012, 12, 21)
+print(result.long_count)               # "13.0.0.0.0"
+print(result.tzolkin.coefficient)      # 4
+print(result.tzolkin.name)             # "Ajaw"
+print(result.haab.day)                 # 3
+print(result.haab.month_name)          # "K'ank'in"
+print(result.lord_of_night)            # "G1"
+```
+
+**TypeScript**
+```typescript
+import { calculate } from 'mayan-calc'
+
+const result = calculate(2012, 12, 21)
+console.log(result.longCount)                // "13.0.0.0.0"
+console.log(result.tzolkin.coefficient)      // 4
+console.log(result.tzolkin.name)             // "Ajaw"
+console.log(result.lordOfNight)              // "G1"
+```
+
+**Java**
+```java
+MayanDate result = Calculator.calculate(2012, 12, 21);
+System.out.println(result.longCount());             // "13.0.0.0.0"
+System.out.println(result.tzolkin().coefficient()); // 4
+System.out.println(result.lordOfNight());           // "G1"
+```
+
+**C#**
+```csharp
+var result = Calculator.Calculate(2012, 12, 21);
+Console.WriteLine(result.LongCount);              // "13.0.0.0.0"
+Console.WriteLine(result.Tzolkin.Coefficient);    // 4
+Console.WriteLine(result.LordOfNight);            // "G1"
+```
+
+**Kotlin**
+```kotlin
+val result = Calculator.calculate(2012, 12, 21)
+println(result.longCount)                // "13.0.0.0.0"
+println(result.tzolkin.coefficient)      // 4
+println(result.lordOfNight)              // "G1"
+```
+
+---
+
+## Output Format
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tzolkin.coefficient` | int (1–13) | Tzolk'in day coefficient |
+| `tzolkin.name` | string | Tzolk'in day name (e.g. `"Ajaw"`) |
+| `haab.day` | int (0–19) | Haab day number |
+| `haab.month_name` | string | Haab month name (e.g. `"K'ank'in"`) |
+| `long_count` | string | Long Count notation (e.g. `"13.0.0.0.0"`) |
+| `lord_of_night` | string | Lord of Night cycle (e.g. `"G1"`) |
+
+Full field specification (including per-language accessor names): [`fixtures/output_spec.json`](fixtures/output_spec.json)
+
+---
+
+## Ground Truth
+
+Verified against GMT correlation constant 584283:
+
+| Date       | Tzolk'in  | Haab         | Long Count    | Lord |
+|------------|-----------|--------------|---------------|------|
+| 2012-12-21 | 4 Ajaw    | 3 K'ank'in   | 13.0.0.0.0    | G1   |
+| 2000-01-01 | 11 Ik'    | 10 K'ank'in  | 12.19.6.15.2  | G6   |
+| 1988-12-07 | 12 Ajaw   | 3 Mak        | 12.18.15.11.0 | G5   |
+| 2026-05-15 | 9 Ben     | 6 Sip        | 13.0.13.10.13 | G7   |
+
+---
+
+## Accuracy
+
+Calculation is based on pure integer arithmetic using the GMT correlation constant (584283). Long Count, Tzolk'in, Haab, and Lord of Night contain no floating-point error.
+
+---
+
+## Issues & Contributing
+
+Found a calculation error or want to add a new language port?
+
+- **Bug report**: Open a [GitHub Issue](https://github.com/C9Jimmy/mayan-calc/issues) with input date, actual result, and expected result
+- **New language port**: Open an Issue to discuss first, then submit a PR with ≥ 30 tests
+- **Documentation**: PRs welcome
+
+---
+
+## Citation
+
+```bibtex
+@software{mayan-calc,
+  author  = {C9Jimmy},
+  title   = {mayan-calc: Maya Calendar Calculation Library},
+  year    = {2026},
+  url     = {https://github.com/C9Jimmy/mayan-calc},
+  license = {MIT}
+}
+```
+
+---
+
+## Support
+
+If this library is useful to you:
+
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/C9Jimmy?style=flat&label=Sponsor%20on%20GitHub)](https://github.com/sponsors/C9Jimmy)
+
+---
+
+## License
+
+[MIT](LICENSE) © 2026 C9Jimmy (https://github.com/C9Jimmy)
