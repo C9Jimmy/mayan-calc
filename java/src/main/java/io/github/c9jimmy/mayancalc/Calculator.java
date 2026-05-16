@@ -22,7 +22,7 @@ public final class Calculator {
         int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.TZOLKIN_CYCLE);
         int coefficient = ((kin + Constants.TZOLKIN_COEFF_ORIGIN - 1) % Constants.TZOLKIN_COEFF_COUNT) + 1;
         int signIdx = (kin + Constants.TZOLKIN_NAME_ORIGIN_IDX) % Constants.TZOLKIN_SIGN_COUNT;
-        return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS[signIdx], signIdx + 1);
+        return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS.get(signIdx), signIdx + 1);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class Calculator {
      */
     static HaabDate jdnToHaab(int jdn) {
         int haabKin = Math.floorMod(jdn - Constants.GMT_CORRELATION + Constants.HAAB_CORRELATION_OFFSET, Constants.HAAB_CYCLE);
-        return new HaabDate(haabKin % Constants.HAAB_DAYS_PER_MONTH, Constants.HAAB_MONTHS[haabKin / Constants.HAAB_DAYS_PER_MONTH]);
+        return new HaabDate(haabKin % Constants.HAAB_DAYS_PER_MONTH, Constants.HAAB_MONTHS.get(haabKin / Constants.HAAB_DAYS_PER_MONTH));
     }
 
     /** JDN → Long Count (baktun.katun.tun.uinal.kin). */
