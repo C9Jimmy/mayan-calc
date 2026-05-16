@@ -5,7 +5,7 @@
     "input": { "year": 2012, "month": 12, "day": 21 },
     "jdn": 2456283,
     "expected": {
-      "tzolkin": { "coefficient": 4, "name": "Ajaw" },
+      "tzolkin": { "coefficient": 4, "name": "Ajaw", "day_sign_number": 20 },
       "haab": { "day": 3, "month_name": "K'ank'in" },
       "long_count": {
         "baktun": 13, "katun": 0, "tun": 0, "uinal": 0, "kin": 0,
@@ -20,7 +20,7 @@
     "input": { "year": 2000, "month": 1, "day": 1 },
     "jdn": 2451545,
     "expected": {
-      "tzolkin": { "coefficient": 11, "name": "Ik'" },
+      "tzolkin": { "coefficient": 11, "name": "Ik'", "day_sign_number": 2 },
       "haab": { "day": 10, "month_name": "K'ank'in" },
       "long_count": {
         "baktun": 12, "katun": 19, "tun": 6, "uinal": 15, "kin": 2,
@@ -35,7 +35,7 @@
     "input": { "year": 1988, "month": 12, "day": 7 },
     "jdn": 2447503,
     "expected": {
-      "tzolkin": { "coefficient": 12, "name": "Ajaw" },
+      "tzolkin": { "coefficient": 12, "name": "Ajaw", "day_sign_number": 20 },
       "haab": { "day": 3, "month_name": "Mak" },
       "long_count": {
         "baktun": 12, "katun": 18, "tun": 15, "uinal": 11, "kin": 0,
@@ -50,7 +50,7 @@
     "input": { "year": 2026, "month": 5, "day": 15 },
     "jdn": 2461176,
     "expected": {
-      "tzolkin": { "coefficient": 9, "name": "Ben" },
+      "tzolkin": { "coefficient": 9, "name": "Ben", "day_sign_number": 13 },
       "haab": { "day": 6, "month_name": "Sip" },
       "long_count": {
         "baktun": 13, "katun": 0, "tun": 13, "uinal": 10, "kin": 13,
