@@ -16,6 +16,7 @@ def test_ground_truth_anchor_dates():
 
         assert result.tzolkin.coefficient == expected["tzolkin"]["coefficient"]
         assert result.tzolkin.name == expected["tzolkin"]["name"]
+        assert result.tzolkin.day_sign_number == expected["tzolkin"]["day_sign_number"]
         assert result.haab.day == expected["haab"]["day"]
         assert result.haab.month_name == expected["haab"]["month_name"]
         assert result.long_count.baktun == expected["long_count"]["baktun"]
