@@ -14,8 +14,10 @@ from mayan_calc.constants import (
     MEEUS_MONTH_FACTOR,
     MEEUS_YEAR_FACTOR,
     TZOLKIN_COEFF_COUNT,
+    TZOLKIN_COEFF_ORIGIN,
     TZOLKIN_CYCLE,
     TZOLKIN_DAY_SIGNS,
+    TZOLKIN_NAME_ORIGIN_IDX,
     TZOLKIN_SIGN_COUNT,
 )
 from mayan_calc.models import HaabDate, LongCount, MayanDate, TzolkinDate
@@ -34,12 +36,12 @@ def _jdn_to_tzolkin(jdn: int) -> TzolkinDate:
 
     Offsets align with the archaeological consensus: Maya creation date
     0.0.0.0.0 (JDN 584283) = 4 Ajaw.
-    +3 on number: kin=0 → 4 (not 1).
-    +19 on sign: kin=0 → Ajaw at index 19 (not Imix at index 0).
+    TZOLKIN_COEFF_ORIGIN - 1 on number: kin=0 → 4 (not 1).
+    TZOLKIN_NAME_ORIGIN_IDX on sign: kin=0 → Ajaw at index 19.
     """
     kin = (jdn - GMT_CORRELATION) % TZOLKIN_CYCLE
-    number = ((kin + 3) % TZOLKIN_COEFF_COUNT) + 1
-    sign_idx = (kin + 19) % TZOLKIN_SIGN_COUNT
+    number = ((kin + TZOLKIN_COEFF_ORIGIN - 1) % TZOLKIN_COEFF_COUNT) + 1
+    sign_idx = (kin + TZOLKIN_NAME_ORIGIN_IDX) % TZOLKIN_SIGN_COUNT
     return TzolkinDate(
         coefficient=number,
         name=TZOLKIN_DAY_SIGNS[sign_idx],

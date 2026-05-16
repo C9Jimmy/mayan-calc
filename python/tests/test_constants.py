@@ -1,7 +1,9 @@
 from mayan_calc.constants import (
     GMT_CORRELATION,
     HAAB_MONTHS,
+    TZOLKIN_COEFF_ORIGIN,
     TZOLKIN_DAY_SIGNS,
+    TZOLKIN_NAME_ORIGIN_IDX,
 )
 
 
@@ -15,6 +17,14 @@ def test_haab_month_count():
 
 def test_gmt_correlation_value():
     assert GMT_CORRELATION == 584283
+
+
+def test_tzolkin_coefficient_origin_value():
+    assert TZOLKIN_COEFF_ORIGIN == 4
+
+
+def test_tzolkin_name_origin_index_value():
+    assert TZOLKIN_NAME_ORIGIN_IDX == 19
 
 
 def test_tzolkin_starts_with_imix():
