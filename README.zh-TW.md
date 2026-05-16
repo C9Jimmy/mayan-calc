@@ -27,7 +27,7 @@
 from mayan_calc import calculate
 
 result = calculate(2012, 12, 21)
-print(result.long_count)               # "13.0.0.0.0"
+print(result.long_count.display)       # "13.0.0.0.0"
 print(result.tzolkin.coefficient)      # 4
 print(result.tzolkin.name)             # "Ajaw"
 print(result.haab.day)                 # 3
@@ -40,7 +40,7 @@ print(result.lord_of_night)            # "G1"
 import { calculate } from 'mayan-calc'
 
 const result = calculate(2012, 12, 21)
-console.log(result.longCount)                // "13.0.0.0.0"
+console.log(result.longCount.display)        // "13.0.0.0.0"
 console.log(result.tzolkin.coefficient)      // 4
 console.log(result.tzolkin.name)             // "Ajaw"
 console.log(result.lordOfNight)              // "G1"
@@ -49,7 +49,7 @@ console.log(result.lordOfNight)              // "G1"
 **Java**
 ```java
 MayanDate result = Calculator.calculate(2012, 12, 21);
-System.out.println(result.longCount());             // "13.0.0.0.0"
+System.out.println(result.longCount().display());   // "13.0.0.0.0"
 System.out.println(result.tzolkin().coefficient()); // 4
 System.out.println(result.lordOfNight());           // "G1"
 ```
@@ -57,7 +57,7 @@ System.out.println(result.lordOfNight());           // "G1"
 **C#**
 ```csharp
 var result = Calculator.Calculate(2012, 12, 21);
-Console.WriteLine(result.LongCount);              // "13.0.0.0.0"
+Console.WriteLine(result.LongCount.Display);      // "13.0.0.0.0"
 Console.WriteLine(result.Tzolkin.Coefficient);    // 4
 Console.WriteLine(result.LordOfNight);            // "G1"
 ```
@@ -65,7 +65,7 @@ Console.WriteLine(result.LordOfNight);            // "G1"
 **Kotlin**
 ```kotlin
 val result = Calculator.calculate(2012, 12, 21)
-println(result.longCount)                // "13.0.0.0.0"
+println(result.longCount.display)        // "13.0.0.0.0"
 println(result.tzolkin.coefficient)      // 4
 println(result.lordOfNight)              // "G1"
 ```
@@ -80,7 +80,7 @@ println(result.lordOfNight)              // "G1"
 | `tzolkin.name` | string | 卓爾金曆日名（如 `"Ajaw"`）|
 | `haab.day` | int (0–19) | 哈布曆日數 |
 | `haab.month_name` | string | 哈布曆月名（如 `"K'ank'in"`）|
-| `long_count` | string | 長計曆記法（如 `"13.0.0.0.0"`）|
+| `long_count` | object with `display` | 長計曆組成欄位與記法（如 `display = "13.0.0.0.0"`）|
 | `lord_of_night` | string | 夜神循環（如 `"G1"`）|
 
 欄位名稱依循 Python 慣例（`snake_case`）。TypeScript / Kotlin 使用 `camelCase`（`longCount`、`lordOfNight`）；Java 使用 getter（`result.longCount()`）；C# 使用 `PascalCase`（`result.LongCount`）。
