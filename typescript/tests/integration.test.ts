@@ -93,6 +93,34 @@ describe('calculate — 2000-01-01', () => {
   })
 })
 
+describe('calculate — 2026-05-15', () => {
+  const result = calculate(2026, 5, 15)
+
+  test('Long Count 13.0.13.10.13', () => {
+    expect(result.longCount.display).toBe('13.0.13.10.13')
+    expect(result.longCount.baktun).toBe(13)
+    expect(result.longCount.katun).toBe(0)
+    expect(result.longCount.tun).toBe(13)
+    expect(result.longCount.uinal).toBe(10)
+    expect(result.longCount.kin).toBe(13)
+  })
+
+  test("Tzolk'in 9 Ben", () => {
+    expect(result.tzolkin.coefficient).toBe(9)
+    expect(result.tzolkin.name).toBe('Ben')
+    expect(result.tzolkin.daySignNumber).toBe(13)
+  })
+
+  test('Haab 6 Sip', () => {
+    expect(result.haab.monthName).toBe('Sip')
+    expect(result.haab.day).toBe(6)
+  })
+
+  test('Lord of Night G7', () => {
+    expect(result.lordOfNight).toBe('G7')
+  })
+})
+
 describe('calculate — output shape', () => {
   test('all required fields are present', () => {
     const result = calculate(1988, 12, 7)
