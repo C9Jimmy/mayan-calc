@@ -19,7 +19,7 @@ public static class Calculator
         int kin = FloorMod(jdn - Constants.CorrelationJdn, 260);
         int coefficient = (kin + 3) % 13 + 1;
         int nameIdx = (kin + 19) % 20;
-        return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx]);
+        return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx], nameIdx + 1);
     }
 
     public static HaabDate JdnToHaab(int jdn)

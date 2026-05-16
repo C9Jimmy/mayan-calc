@@ -1,11 +1,13 @@
 namespace MayanCalc;
 
-public record TzolkinDate(int Coefficient, string Name);
+public record TzolkinDate(int Coefficient, string Name, int DaySignNumber);
 
 public record HaabDate(int Day, string MonthName);
 
 public record LongCount(int Baktun, int Katun, int Tun, int Uinal, int Kin)
 {
+    public string Display => ToString();
+
     public override string ToString() =>
         $"{Baktun}.{Katun}.{Tun}.{Uinal}.{Kin}";
 }

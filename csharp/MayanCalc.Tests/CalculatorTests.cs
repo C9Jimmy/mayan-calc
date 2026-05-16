@@ -52,15 +52,16 @@ public class CalculatorTests
     public class TzolkinTests
     {
         [Theory]
-        [InlineData(2456283, 4, "Ajaw")]   // 2012-12-21
-        [InlineData(2451545, 11, "Ik'")]   // 2000-01-01
-        [InlineData(2447503, 12, "Ajaw")]  // 1988-12-07
-        [InlineData(2461176, 9, "Ben")]    // 2026-05-15
-        public void AnchorDates(int jdn, int expectedCoefficient, string expectedName)
+        [InlineData(2456283, 4, "Ajaw", 20)]   // 2012-12-21
+        [InlineData(2451545, 11, "Ik'", 2)]    // 2000-01-01
+        [InlineData(2447503, 12, "Ajaw", 20)]  // 1988-12-07
+        [InlineData(2461176, 9, "Ben", 13)]    // 2026-05-15
+        public void AnchorDates(int jdn, int expectedCoefficient, string expectedName, int expectedDaySignNumber)
         {
             var result = Calculator.JdnToTzolkin(jdn);
             Assert.Equal(expectedCoefficient, result.Coefficient);
             Assert.Equal(expectedName, result.Name);
+            Assert.Equal(expectedDaySignNumber, result.DaySignNumber);
         }
 
         [Fact]
@@ -156,6 +157,13 @@ public class CalculatorTests
         {
             var lc = Calculator.JdnToLongCount(2456283);
             Assert.Equal("13.0.0.0.0", lc.ToString());
+        }
+
+        [Fact]
+        public void Display_FormattedCorrectly()
+        {
+            var lc = Calculator.JdnToLongCount(2456283);
+            Assert.Equal("13.0.0.0.0", lc.Display);
         }
     }
 
