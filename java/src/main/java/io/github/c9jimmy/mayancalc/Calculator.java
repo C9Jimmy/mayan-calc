@@ -9,7 +9,7 @@ public final class Calculator {
         int m = (month <= 2) ? month + 12 : month;
         int a = y / 100;
         int b = 2 - a + a / 4;
-        return (int)(365.25 * (y + 4716)) + (int)(30.6001 * (m + 1)) + day + b - 1524;
+        return (int)(Constants.MEEUS_YEAR_FACTOR * (y + Constants.MEEUS_EPOCH_A)) + (int)(Constants.MEEUS_MONTH_FACTOR * (m + 1)) + day + b - Constants.MEEUS_EPOCH_B;
     }
 
     /**
@@ -19,9 +19,9 @@ public final class Calculator {
      * +3 on number, +19 on sign: aligns creation date (0.0.0.0.0) with 4 Ajaw.
      */
     static TzolkinDate jdnToTzolkin(int jdn) {
-        int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, 260);
-        int coefficient = ((kin + 3) % 13) + 1;
-        int signIdx = (kin + 19) % 20;
+        int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.TZOLKIN_CYCLE);
+        int coefficient = ((kin + 3) % Constants.TZOLKIN_COEFF_COUNT) + 1;
+        int signIdx = (kin + 19) % Constants.TZOLKIN_SIGN_COUNT;
         return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS[signIdx], signIdx + 1);
     }
 
@@ -30,25 +30,25 @@ public final class Calculator {
      * +348 aligns creation date with 8 Kumk'u (position 17×20+8 = 348).
      */
     static HaabDate jdnToHaab(int jdn) {
-        int haabKin = Math.floorMod(jdn - Constants.GMT_CORRELATION + 348, 365);
-        return new HaabDate(haabKin % 20, Constants.HAAB_MONTHS[haabKin / 20]);
+        int haabKin = Math.floorMod(jdn - Constants.GMT_CORRELATION + Constants.HAAB_CORRELATION_OFFSET, Constants.HAAB_CYCLE);
+        return new HaabDate(haabKin % Constants.HAAB_DAYS_PER_MONTH, Constants.HAAB_MONTHS[haabKin / Constants.HAAB_DAYS_PER_MONTH]);
     }
 
     /** JDN → Long Count (baktun.katun.tun.uinal.kin). */
     static LongCount jdnToLongCount(int jdn) {
         int total = jdn - Constants.GMT_CORRELATION;
         return new LongCount(
-            total / 144000,
-            (total % 144000) / 7200,
-            (total % 7200)   / 360,
-            (total % 360)    / 20,
-            total % 20
+            total / Constants.LC_BAKTUN,
+            (total % Constants.LC_BAKTUN) / Constants.LC_KATUN,
+            (total % Constants.LC_KATUN)  / Constants.LC_TUN,
+            (total % Constants.LC_TUN)    / Constants.LC_UINAL,
+            total % Constants.LC_UINAL
         );
     }
 
     /** JDN → Lord of Night G1–G9 (9-day cycle). */
     static String jdnToLordOfNight(int jdn) {
-        return "G" + (Math.floorMod(jdn - Constants.GMT_CORRELATION, 9) + 1);
+        return "G" + (Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.LORD_OF_NIGHT_CYCLE) + 1);
     }
 
     /** Gregorian date → complete Maya calendar output. */
