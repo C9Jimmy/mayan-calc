@@ -30,3 +30,5 @@ export interface MayanChart {
   readonly longCount: LongCount;
   readonly lordOfNight: string; // "G1"–"G9"
 }
+
+export type MayanDate = MayanChart

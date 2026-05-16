@@ -2,7 +2,7 @@ import { GMT_CORRELATION, HAAB_MONTHS, TZOLKIN_DAY_SIGNS } from './constants'
 import { HaabDate, LongCount, MayanChart, TzolkinDate } from './models'
 
 /** Gregorian date → Julian Day Number (Meeus algorithm). */
-export function dateToJdn(year: number, month: number, day: number): number {
+function dateToJdn(year: number, month: number, day: number): number {
   const [y, m] = month <= 2 ? [year - 1, month + 12] : [year, month]
   const a = Math.floor(y / 100)
   const b = 2 - a + Math.floor(a / 4)
@@ -21,7 +21,7 @@ export function dateToJdn(year: number, month: number, day: number): number {
  * +19 on sign:  total=0 → Ajaw at index 19 (not Imix at index 0).
  * Double-modulo guards against pre-epoch dates where total < 0.
  */
-export function jdnToTzolkin(jdn: number): TzolkinDate {
+function jdnToTzolkin(jdn: number): TzolkinDate {
   const total = jdn - GMT_CORRELATION
   const number = (((total + 3) % 13) + 13) % 13 + 1
   const signIdx = (((total + 19) % 20) + 20) % 20
@@ -36,7 +36,7 @@ export function jdnToTzolkin(jdn: number): TzolkinDate {
  * JDN → Haab date.
  * +348 aligns with creation date 8 Kumk'u: position 17×20+8 = 348.
  */
-export function jdnToHaab(jdn: number): HaabDate {
+function jdnToHaab(jdn: number): HaabDate {
   const total = jdn - GMT_CORRELATION
   const haabPos = (((total + 348) % 365) + 365) % 365
   const monthIdx = Math.floor(haabPos / 20)
@@ -47,7 +47,7 @@ export function jdnToHaab(jdn: number): HaabDate {
 }
 
 /** JDN → Long Count (baktun.katun.tun.uinal.kin). */
-export function jdnToLongCount(jdn: number): LongCount {
+function jdnToLongCount(jdn: number): LongCount {
   const total = jdn - GMT_CORRELATION
   const baktun = Math.floor(total / 144000)
   const katun = Math.floor((total % 144000) / 7200)
@@ -65,7 +65,7 @@ export function jdnToLongCount(jdn: number): LongCount {
 }
 
 /** JDN → Lord of Night G1–G9 (9-day cycle). */
-export function jdnToLordOfNight(jdn: number): string {
+function jdnToLordOfNight(jdn: number): string {
   const total = jdn - GMT_CORRELATION
   return `G${((total % 9) + 9) % 9 + 1}`
 }
