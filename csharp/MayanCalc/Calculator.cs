@@ -17,8 +17,8 @@ public static class Calculator
     internal static TzolkinDate JdnToTzolkin(int jdn)
     {
         int kin = FloorMod(jdn - Constants.CorrelationJdn, Constants.TzolkinCycle);
-        int coefficient = (kin + 3) % Constants.TzolkinCoeffCount + 1;
-        int nameIdx = (kin + 19) % Constants.TzolkinSignCount;
+        int coefficient = (kin + Constants.TzolkinCoeffOrigin - 1) % Constants.TzolkinCoeffCount + 1;
+        int nameIdx = (kin + Constants.TzolkinNameOriginIdx) % Constants.TzolkinSignCount;
         return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx], nameIdx + 1);
     }
 

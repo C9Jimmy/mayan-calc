@@ -35,6 +35,18 @@ public class ConstantsTests
     }
 
     [Fact]
+    public void TzolkinCoeffOrigin_Is4()
+    {
+        Assert.Equal(4, Constants.TzolkinCoeffOrigin);
+    }
+
+    [Fact]
+    public void TzolkinNameOriginIdx_Is19()
+    {
+        Assert.Equal(19, Constants.TzolkinNameOriginIdx);
+    }
+
+    [Fact]
     public void TzolkinNames_FullOrder()
     {
         string[] expected =

@@ -4,6 +4,8 @@ public static class Constants
 {
     public const int CorrelationJdn = 584283;
 
+    public const int TzolkinCoeffOrigin = 4;
+    public const int TzolkinNameOriginIdx = 19;
     public const int TzolkinCycle = 260;
     public const int TzolkinCoeffCount = 13;
     public const int TzolkinSignCount = 20;
