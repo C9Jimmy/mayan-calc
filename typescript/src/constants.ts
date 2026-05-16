@@ -23,16 +23,16 @@ export const MEEUS_MONTH_FACTOR = 30.6001;
 export const MEEUS_EPOCH_A = 4716;
 export const MEEUS_EPOCH_B = 1524;
 
-export const TZOLKIN_DAY_SIGNS: readonly string[] = [
+export const TZOLKIN_DAY_SIGNS = [
   "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
   "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
   "Chuwen", "Eb", "Ben", "Hix", "Men",
   "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw",
-];
+] as const;
 
-export const HAAB_MONTHS: readonly string[] = [
+export const HAAB_MONTHS = [
   "Pop", "Wo", "Sip", "Sotz'", "Sek",
   "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
   "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
   "Pax", "K'ayab", "Kumk'u", "Wayeb",
-];
+] as const;
