@@ -47,4 +47,26 @@ class ConstantsTest {
     void haabLastMonthIsWayeb() {
         assertEquals("Wayeb", Constants.HAAB_MONTHS[18]);
     }
+
+    @Test
+    void tzolkinFullOrder() {
+        String[] expected = {
+            "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
+            "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
+            "Chuwen", "Eb", "Ben", "Hix", "Men",
+            "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"
+        };
+        assertArrayEquals(expected, Constants.TZOLKIN_DAY_SIGNS);
+    }
+
+    @Test
+    void haabFullOrder() {
+        String[] expected = {
+            "Pop", "Wo", "Sip", "Sotz'", "Sek",
+            "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
+            "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
+            "Pax", "K'ayab", "Kumk'u", "Wayeb"
+        };
+        assertArrayEquals(expected, Constants.HAAB_MONTHS);
+    }
 }

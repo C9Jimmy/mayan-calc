@@ -33,4 +33,30 @@ public class ConstantsTests
     {
         Assert.Equal(584283, Constants.CorrelationJdn);
     }
+
+    [Fact]
+    public void TzolkinNames_FullOrder()
+    {
+        string[] expected =
+        {
+            "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
+            "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
+            "Chuwen", "Eb", "Ben", "Hix", "Men",
+            "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"
+        };
+        Assert.Equal(expected, Constants.TzolkinNames);
+    }
+
+    [Fact]
+    public void HaabMonthNames_FullOrder()
+    {
+        string[] expected =
+        {
+            "Pop", "Wo", "Sip", "Sotz'", "Sek",
+            "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
+            "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
+            "Pax", "K'ayab", "Kumk'u", "Wayeb"
+        };
+        Assert.Equal(expected, Constants.HaabMonthNames);
+    }
 }

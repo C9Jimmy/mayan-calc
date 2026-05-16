@@ -42,3 +42,25 @@ describe('GMT_CORRELATION', () => {
     expect(GMT_CORRELATION).toBe(584283)
   })
 })
+
+describe('TZOLKIN_DAY_SIGNS full order', () => {
+  test('matches complete 20-sign sequence', () => {
+    expect(TZOLKIN_DAY_SIGNS).toEqual([
+      "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
+      "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
+      "Chuwen", "Eb", "Ben", "Hix", "Men",
+      "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw",
+    ])
+  })
+})
+
+describe('HAAB_MONTHS full order', () => {
+  test('matches complete 19-month sequence', () => {
+    expect(HAAB_MONTHS).toEqual([
+      "Pop", "Wo", "Sip", "Sotz'", "Sek",
+      "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
+      "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
+      "Pax", "K'ayab", "Kumk'u", "Wayeb",
+    ])
+  })
+})
