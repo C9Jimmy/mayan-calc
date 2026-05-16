@@ -1,4 +1,5 @@
 using MayanCalc;
+using System.Collections.Generic;
 
 namespace MayanCalc.Tests;
 
@@ -7,7 +8,7 @@ public class ConstantsTests
     [Fact]
     public void TzolkinNames_Has20Elements()
     {
-        Assert.Equal(20, Constants.TzolkinNames.Length);
+        Assert.Equal(20, Constants.TzolkinNames.Count);
     }
 
     [Fact]
@@ -25,7 +26,7 @@ public class ConstantsTests
     [Fact]
     public void HaabMonthNames_Has19Elements()
     {
-        Assert.Equal(19, Constants.HaabMonthNames.Length);
+        Assert.Equal(19, Constants.HaabMonthNames.Count);
     }
 
     [Fact]
@@ -49,7 +50,7 @@ public class ConstantsTests
     [Fact]
     public void TzolkinNames_FullOrder()
     {
-        string[] expected =
+        IReadOnlyList<string> expected = new[]
         {
             "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
             "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
@@ -62,7 +63,7 @@ public class ConstantsTests
     [Fact]
     public void HaabMonthNames_FullOrder()
     {
-        string[] expected =
+        IReadOnlyList<string> expected = new[]
         {
             "Pop", "Wo", "Sip", "Sotz'", "Sek",
             "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
@@ -70,5 +71,12 @@ public class ConstantsTests
             "Pax", "K'ayab", "Kumk'u", "Wayeb"
         };
         Assert.Equal(expected, Constants.HaabMonthNames);
+    }
+
+    [Fact]
+    public void NameLists_AreReadOnlyLists()
+    {
+        Assert.IsAssignableFrom<IReadOnlyList<string>>(Constants.TzolkinNames);
+        Assert.IsAssignableFrom<IReadOnlyList<string>>(Constants.HaabMonthNames);
     }
 }

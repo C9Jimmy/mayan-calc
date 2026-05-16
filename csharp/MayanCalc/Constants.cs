@@ -1,5 +1,8 @@
 namespace MayanCalc;
 
+using System;
+using System.Collections.Generic;
+
 public static class Constants
 {
     public const int CorrelationJdn = 584283;
@@ -27,19 +30,19 @@ public static class Constants
     public const int MeeusEpochA = 4716;
     public const int MeeusEpochB = 1524;
 
-    public static readonly string[] TzolkinNames =
+    public static readonly IReadOnlyList<string> TzolkinNames = Array.AsReadOnly(new[]
     {
         "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
         "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
         "Chuwen", "Eb", "Ben", "Hix", "Men",
         "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"
-    };
+    });
 
-    public static readonly string[] HaabMonthNames =
+    public static readonly IReadOnlyList<string> HaabMonthNames = Array.AsReadOnly(new[]
     {
         "Pop", "Wo", "Sip", "Sotz'", "Sek",
         "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
         "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
         "Pax", "K'ayab", "Kumk'u", "Wayeb"
-    };
+    });
 }
