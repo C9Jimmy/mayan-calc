@@ -11,37 +11,37 @@ public static class Calculator
         int m = month <= 2 ? month + 12 : month;
         int a = y / 100;
         int b = 2 - a + a / 4;
-        return (int)(365.25 * (y + 4716)) + (int)(30.6001 * (m + 1)) + day + b - 1524;
+        return (int)(Constants.MeeusYearFactor * (y + Constants.MeeusEpochA)) + (int)(Constants.MeeusMonthFactor * (m + 1)) + day + b - Constants.MeeusEpochB;
     }
 
     internal static TzolkinDate JdnToTzolkin(int jdn)
     {
-        int kin = FloorMod(jdn - Constants.CorrelationJdn, 260);
-        int coefficient = (kin + 3) % 13 + 1;
-        int nameIdx = (kin + 19) % 20;
+        int kin = FloorMod(jdn - Constants.CorrelationJdn, Constants.TzolkinCycle);
+        int coefficient = (kin + 3) % Constants.TzolkinCoeffCount + 1;
+        int nameIdx = (kin + 19) % Constants.TzolkinSignCount;
         return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx], nameIdx + 1);
     }
 
     internal static HaabDate JdnToHaab(int jdn)
     {
-        int haabKin = FloorMod(jdn - Constants.CorrelationJdn + 348, 365);
-        return new HaabDate(haabKin % 20, Constants.HaabMonthNames[haabKin / 20]);
+        int haabKin = FloorMod(jdn - Constants.CorrelationJdn + Constants.HaabCorrelationOffset, Constants.HaabCycle);
+        return new HaabDate(haabKin % Constants.HaabDaysPerMonth, Constants.HaabMonthNames[haabKin / Constants.HaabDaysPerMonth]);
     }
 
     internal static LongCount JdnToLongCount(int jdn)
     {
         int total = jdn - Constants.CorrelationJdn;
         return new LongCount(
-            total / 144000,
-            total % 144000 / 7200,
-            total % 7200 / 360,
-            total % 360 / 20,
-            total % 20
+            total / Constants.LcBaktun,
+            total % Constants.LcBaktun / Constants.LcKatun,
+            total % Constants.LcKatun / Constants.LcTun,
+            total % Constants.LcTun / Constants.LcUinal,
+            total % Constants.LcUinal
         );
     }
 
     internal static string JdnToLordOfNight(int jdn) =>
-        $"G{FloorMod(jdn - Constants.CorrelationJdn, 9) + 1}";
+        $"G{FloorMod(jdn - Constants.CorrelationJdn, Constants.LordOfNightCycle) + 1}";
 
     public static MayanDate Calculate(int year, int month, int day)
     {
