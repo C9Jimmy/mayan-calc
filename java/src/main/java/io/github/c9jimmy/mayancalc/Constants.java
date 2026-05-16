@@ -5,6 +5,8 @@ public final class Constants {
 
     public static final int GMT_CORRELATION = 584283;
 
+    public static final int TZOLKIN_COEFF_ORIGIN = 4;
+    public static final int TZOLKIN_NAME_ORIGIN_IDX = 19;
     public static final int TZOLKIN_CYCLE = 260;
     public static final int TZOLKIN_COEFF_COUNT = 13;
     public static final int TZOLKIN_SIGN_COUNT = 20;

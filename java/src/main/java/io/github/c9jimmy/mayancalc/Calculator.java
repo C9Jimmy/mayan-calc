@@ -16,12 +16,12 @@ public final class Calculator {
      * JDN → Tzolk'in date.
      *
      * Math.floorMod handles pre-epoch dates (total < 0) correctly.
-     * +3 on number, +19 on sign: aligns creation date (0.0.0.0.0) with 4 Ajaw.
+     * Tzolk'in origin constants align creation date (0.0.0.0.0) with 4 Ajaw.
      */
     static TzolkinDate jdnToTzolkin(int jdn) {
         int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.TZOLKIN_CYCLE);
-        int coefficient = ((kin + 3) % Constants.TZOLKIN_COEFF_COUNT) + 1;
-        int signIdx = (kin + 19) % Constants.TZOLKIN_SIGN_COUNT;
+        int coefficient = ((kin + Constants.TZOLKIN_COEFF_ORIGIN - 1) % Constants.TZOLKIN_COEFF_COUNT) + 1;
+        int signIdx = (kin + Constants.TZOLKIN_NAME_ORIGIN_IDX) % Constants.TZOLKIN_SIGN_COUNT;
         return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS[signIdx], signIdx + 1);
     }
 

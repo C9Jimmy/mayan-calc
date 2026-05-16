@@ -14,6 +14,16 @@ class ConstantsTest {
     }
 
     @Test
+    void tzolkinCoeffOriginIs4() {
+        assertEquals(4, Constants.TZOLKIN_COEFF_ORIGIN);
+    }
+
+    @Test
+    void tzolkinNameOriginIdxIs19() {
+        assertEquals(19, Constants.TZOLKIN_NAME_ORIGIN_IDX);
+    }
+
+    @Test
     void tzolkinDaySignsHas20Elements() {
         assertEquals(20, Constants.TZOLKIN_DAY_SIGNS.length);
     }
