@@ -14,7 +14,9 @@ import {
   MEEUS_MONTH_FACTOR,
   MEEUS_YEAR_FACTOR,
   TZOLKIN_COEFF_COUNT,
+  TZOLKIN_COEFF_ORIGIN,
   TZOLKIN_DAY_SIGNS,
+  TZOLKIN_NAME_ORIGIN_IDX,
   TZOLKIN_SIGN_COUNT,
 } from './constants'
 import { HaabDate, LongCount, MayanChart, TzolkinDate } from './models'
@@ -35,14 +37,14 @@ function dateToJdn(year: number, month: number, day: number): number {
  * JDN → Tzolk'in date.
  *
  * Offsets align with archaeological consensus: creation date 0.0.0.0.0 = 4 Ajaw.
- * +3 on number: total=0 → 4 (not 1).
- * +19 on sign:  total=0 → Ajaw at index 19 (not Imix at index 0).
+ * TZOLKIN_COEFF_ORIGIN - 1 on number: total=0 → 4 (not 1).
+ * TZOLKIN_NAME_ORIGIN_IDX on sign: total=0 → Ajaw at index 19.
  * Double-modulo guards against pre-epoch dates where total < 0.
  */
 function jdnToTzolkin(jdn: number): TzolkinDate {
   const total = jdn - GMT_CORRELATION
-  const number = (((total + 3) % TZOLKIN_COEFF_COUNT) + TZOLKIN_COEFF_COUNT) % TZOLKIN_COEFF_COUNT + 1
-  const signIdx = (((total + 19) % TZOLKIN_SIGN_COUNT) + TZOLKIN_SIGN_COUNT) % TZOLKIN_SIGN_COUNT
+  const number = (((total + TZOLKIN_COEFF_ORIGIN - 1) % TZOLKIN_COEFF_COUNT) + TZOLKIN_COEFF_COUNT) % TZOLKIN_COEFF_COUNT + 1
+  const signIdx = (((total + TZOLKIN_NAME_ORIGIN_IDX) % TZOLKIN_SIGN_COUNT) + TZOLKIN_SIGN_COUNT) % TZOLKIN_SIGN_COUNT
   return {
     coefficient: number,
     name: TZOLKIN_DAY_SIGNS[signIdx],

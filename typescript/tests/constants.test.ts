@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'vitest'
-import { GMT_CORRELATION, HAAB_MONTHS, TZOLKIN_DAY_SIGNS } from '../src/constants'
+import {
+  GMT_CORRELATION,
+  HAAB_MONTHS,
+  TZOLKIN_COEFF_ORIGIN,
+  TZOLKIN_DAY_SIGNS,
+  TZOLKIN_NAME_ORIGIN_IDX,
+} from '../src/constants'
 
 describe('TZOLKIN_DAY_SIGNS', () => {
   test('has 20 signs', () => {
@@ -40,6 +46,16 @@ describe('HAAB_MONTHS', () => {
 describe('GMT_CORRELATION', () => {
   test('equals 584283 (Goodman-Martinez-Thompson consensus)', () => {
     expect(GMT_CORRELATION).toBe(584283)
+  })
+})
+
+describe('Tzolk\'in origin offsets', () => {
+  test('matches the canonical coefficient origin', () => {
+    expect(TZOLKIN_COEFF_ORIGIN).toBe(4)
+  })
+
+  test('matches the canonical name origin index', () => {
+    expect(TZOLKIN_NAME_ORIGIN_IDX).toBe(19)
   })
 })
 

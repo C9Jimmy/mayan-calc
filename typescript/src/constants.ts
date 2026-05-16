@@ -1,6 +1,8 @@
 /** GMT correlation constant (Goodman-Martinez-Thompson archaeological consensus). */
 export const GMT_CORRELATION = 584283;
 
+export const TZOLKIN_COEFF_ORIGIN = 4;
+export const TZOLKIN_NAME_ORIGIN_IDX = 19;
 export const TZOLKIN_CYCLE = 260;
 export const TZOLKIN_COEFF_COUNT = 13;
 export const TZOLKIN_SIGN_COUNT = 20;
