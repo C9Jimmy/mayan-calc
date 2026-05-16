@@ -18,9 +18,8 @@ class ConstantsTest {
     @Test fun tzolkinOriginNameIsAjaw() = assertEquals("Ajaw", TZOLKIN_NAMES[TZOLKIN_NAME_ORIGIN_IDX])
     @Test fun tzolkinNamesHaveNoBlankEntries() = assertTrue(TZOLKIN_NAMES.none { it.isBlank() })
 
-    // Wayeb is returned inline by jdnToHaab when monthIdx >= 18; not stored in this list
-    @Test fun haabMonthNamesHas18Elements() = assertEquals(18, HAAB_MONTH_NAMES.size)
+    @Test fun haabMonthNamesHas19Elements() = assertEquals(19, HAAB_MONTH_NAMES.size)
     @Test fun haabFirstMonthIsPop() = assertEquals("Pop", HAAB_MONTH_NAMES[0])
-    @Test fun haabLastMonthIsKumku() = assertEquals("Kumk'u", HAAB_MONTH_NAMES[17])
+    @Test fun haabLastMonthIsWayeb() = assertEquals("Wayeb", HAAB_MONTH_NAMES[18])
     @Test fun haabMonthNamesHaveNoBlankEntries() = assertTrue(HAAB_MONTH_NAMES.none { it.isBlank() })
 }

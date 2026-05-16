@@ -61,6 +61,9 @@ class CalculatorTest {
 
         @Test fun creationDate_nameIsAjaw() =
             assertEquals("Ajaw", Calculator.jdnToTzolkin(CORRELATION_JDN).name)
+
+        @Test fun creationDate_daySignNumberIs20() =
+            assertEquals(20, Calculator.jdnToTzolkin(CORRELATION_JDN).daySignNumber)
     }
 
     // ── jdnToHaab ────────────────────────────────────────────────────────────
@@ -113,6 +116,9 @@ class CalculatorTest {
 
         @Test fun toStringFormat() =
             assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(CORRELATION_JDN).toString())
+
+        @Test fun displayFormat() =
+            assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(CORRELATION_JDN).display)
 
         @Test fun creationDateIsAllZero() {
             val lc = Calculator.jdnToLongCount(CORRELATION_JDN)

@@ -18,14 +18,13 @@ object Calculator {
         val kin = floorMod(jdn - CORRELATION_JDN, 260L).toInt()
         val coefficient = (kin + TZOLKIN_COEFF_ORIGIN - 1) % 13 + 1
         val nameIdx = (kin + TZOLKIN_NAME_ORIGIN_IDX) % 20
-        return TzolkinDate(coefficient, TZOLKIN_NAMES[nameIdx])
+        return TzolkinDate(coefficient, TZOLKIN_NAMES[nameIdx], nameIdx + 1)
     }
 
     fun jdnToHaab(jdn: Long): HaabDate {
         val haabKin = floorMod(jdn - CORRELATION_JDN + 348L, 365L).toInt()
         val monthIdx = haabKin / 20
-        val monthName = if (monthIdx < HAAB_MONTH_NAMES.size) HAAB_MONTH_NAMES[monthIdx] else "Wayeb"
-        return HaabDate(haabKin % 20, monthName)
+        return HaabDate(haabKin % 20, HAAB_MONTH_NAMES[monthIdx])
     }
 
     fun jdnToLongCount(jdn: Long): LongCount {

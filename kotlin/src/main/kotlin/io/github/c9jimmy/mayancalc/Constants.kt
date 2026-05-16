@@ -16,5 +16,5 @@ val HAAB_MONTH_NAMES: List<String> = listOf(
     "Pop", "Wo", "Sip", "Sotz'", "Sek",
     "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
     "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
-    "Pax", "K'ayab", "Kumk'u"
+    "Pax", "K'ayab", "Kumk'u", "Wayeb"
 )
