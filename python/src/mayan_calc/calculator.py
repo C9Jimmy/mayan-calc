@@ -1,4 +1,23 @@
-from mayan_calc.constants import GMT_CORRELATION, HAAB_MONTHS, TZOLKIN_DAY_SIGNS
+from mayan_calc.constants import (
+    GMT_CORRELATION,
+    HAAB_CORRELATION_OFFSET,
+    HAAB_CYCLE,
+    HAAB_DAYS_PER_MONTH,
+    HAAB_MONTHS,
+    LC_BAKTUN,
+    LC_KATUN,
+    LC_TUN,
+    LC_UINAL,
+    LORD_OF_NIGHT_CYCLE,
+    MEEUS_EPOCH_A,
+    MEEUS_EPOCH_B,
+    MEEUS_MONTH_FACTOR,
+    MEEUS_YEAR_FACTOR,
+    TZOLKIN_COEFF_COUNT,
+    TZOLKIN_CYCLE,
+    TZOLKIN_DAY_SIGNS,
+    TZOLKIN_SIGN_COUNT,
+)
 from mayan_calc.models import HaabDate, LongCount, MayanDate, TzolkinDate
 
 
@@ -7,7 +26,7 @@ def _date_to_jdn(year: int, month: int, day: int) -> int:
     y, m = (year - 1, month + 12) if month <= 2 else (year, month)
     a = y // 100
     b = 2 - a + a // 4
-    return int(365.25 * (y + 4716)) + int(30.6001 * (m + 1)) + day + b - 1524
+    return int(MEEUS_YEAR_FACTOR * (y + MEEUS_EPOCH_A)) + int(MEEUS_MONTH_FACTOR * (m + 1)) + day + b - MEEUS_EPOCH_B
 
 
 def _jdn_to_tzolkin(jdn: int) -> TzolkinDate:
@@ -18,9 +37,9 @@ def _jdn_to_tzolkin(jdn: int) -> TzolkinDate:
     +3 on number: kin=0 → 4 (not 1).
     +19 on sign: kin=0 → Ajaw at index 19 (not Imix at index 0).
     """
-    kin = (jdn - GMT_CORRELATION) % 260
-    number = ((kin + 3) % 13) + 1
-    sign_idx = (kin + 19) % 20
+    kin = (jdn - GMT_CORRELATION) % TZOLKIN_CYCLE
+    number = ((kin + 3) % TZOLKIN_COEFF_COUNT) + 1
+    sign_idx = (kin + 19) % TZOLKIN_SIGN_COUNT
     return TzolkinDate(
         coefficient=number,
         name=TZOLKIN_DAY_SIGNS[sign_idx],
@@ -33,19 +52,19 @@ def _jdn_to_haab(jdn: int) -> HaabDate:
 
     +348 aligns with creation date 8 Kumk'u: position 17*20+8 = 348.
     """
-    haab_kin = (jdn - GMT_CORRELATION + 348) % 365
-    month_idx = haab_kin // 20
-    return HaabDate(day=haab_kin % 20, month_name=HAAB_MONTHS[month_idx])
+    haab_kin = (jdn - GMT_CORRELATION + HAAB_CORRELATION_OFFSET) % HAAB_CYCLE
+    month_idx = haab_kin // HAAB_DAYS_PER_MONTH
+    return HaabDate(day=haab_kin % HAAB_DAYS_PER_MONTH, month_name=HAAB_MONTHS[month_idx])
 
 
 def _jdn_to_long_count(jdn: int) -> LongCount:
     """JDN → Long Count (baktun.katun.tun.uinal.kin)."""
     total = jdn - GMT_CORRELATION
-    baktun = total // 144000
-    katun = (total % 144000) // 7200
-    tun = (total % 7200) // 360
-    uinal = (total % 360) // 20
-    kin = total % 20
+    baktun = total // LC_BAKTUN
+    katun = (total % LC_BAKTUN) // LC_KATUN
+    tun = (total % LC_KATUN) // LC_TUN
+    uinal = (total % LC_TUN) // LC_UINAL
+    kin = total % LC_UINAL
     return LongCount(
         baktun=baktun,
         katun=katun,
@@ -58,7 +77,7 @@ def _jdn_to_long_count(jdn: int) -> LongCount:
 
 def _jdn_to_lord_of_night(jdn: int) -> str:
     """JDN → Lord of Night G1–G9 (9-day cycle)."""
-    return f"G{((jdn - GMT_CORRELATION) % 9) + 1}"
+    return f"G{((jdn - GMT_CORRELATION) % LORD_OF_NIGHT_CYCLE) + 1}"
 
 
 def calculate(year: int, month: int, day: int) -> MayanDate:
