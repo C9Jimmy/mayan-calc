@@ -5,7 +5,7 @@ public static class Calculator
     // C# % returns negative for negative dividend; FloorMod always returns non-negative.
     private static int FloorMod(int a, int b) => ((a % b) + b) % b;
 
-    public static int DateToJdn(int year, int month, int day)
+    internal static int DateToJdn(int year, int month, int day)
     {
         int y = month <= 2 ? year - 1 : year;
         int m = month <= 2 ? month + 12 : month;
@@ -14,7 +14,7 @@ public static class Calculator
         return (int)(365.25 * (y + 4716)) + (int)(30.6001 * (m + 1)) + day + b - 1524;
     }
 
-    public static TzolkinDate JdnToTzolkin(int jdn)
+    internal static TzolkinDate JdnToTzolkin(int jdn)
     {
         int kin = FloorMod(jdn - Constants.CorrelationJdn, 260);
         int coefficient = (kin + 3) % 13 + 1;
@@ -22,13 +22,13 @@ public static class Calculator
         return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx], nameIdx + 1);
     }
 
-    public static HaabDate JdnToHaab(int jdn)
+    internal static HaabDate JdnToHaab(int jdn)
     {
         int haabKin = FloorMod(jdn - Constants.CorrelationJdn + 348, 365);
         return new HaabDate(haabKin % 20, Constants.HaabMonthNames[haabKin / 20]);
     }
 
-    public static LongCount JdnToLongCount(int jdn)
+    internal static LongCount JdnToLongCount(int jdn)
     {
         int total = jdn - Constants.CorrelationJdn;
         return new LongCount(
@@ -40,7 +40,7 @@ public static class Calculator
         );
     }
 
-    public static string JdnToLordOfNight(int jdn) =>
+    internal static string JdnToLordOfNight(int jdn) =>
         $"G{FloorMod(jdn - Constants.CorrelationJdn, 9) + 1}";
 
     public static MayanDate Calculate(int year, int month, int day)
