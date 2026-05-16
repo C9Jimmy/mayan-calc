@@ -4,7 +4,7 @@ public final class Calculator {
     private Calculator() {}
 
     /** Gregorian date → Julian Day Number (Meeus algorithm). */
-    public static int dateToJdn(int year, int month, int day) {
+    static int dateToJdn(int year, int month, int day) {
         int y = (month <= 2) ? year - 1 : year;
         int m = (month <= 2) ? month + 12 : month;
         int a = y / 100;
@@ -18,7 +18,7 @@ public final class Calculator {
      * Math.floorMod handles pre-epoch dates (total < 0) correctly.
      * +3 on number, +19 on sign: aligns creation date (0.0.0.0.0) with 4 Ajaw.
      */
-    public static TzolkinDate jdnToTzolkin(int jdn) {
+    static TzolkinDate jdnToTzolkin(int jdn) {
         int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, 260);
         int coefficient = ((kin + 3) % 13) + 1;
         int signIdx = (kin + 19) % 20;
@@ -29,13 +29,13 @@ public final class Calculator {
      * JDN → Haab date.
      * +348 aligns creation date with 8 Kumk'u (position 17×20+8 = 348).
      */
-    public static HaabDate jdnToHaab(int jdn) {
+    static HaabDate jdnToHaab(int jdn) {
         int haabKin = Math.floorMod(jdn - Constants.GMT_CORRELATION + 348, 365);
         return new HaabDate(haabKin % 20, Constants.HAAB_MONTHS[haabKin / 20]);
     }
 
     /** JDN → Long Count (baktun.katun.tun.uinal.kin). */
-    public static LongCount jdnToLongCount(int jdn) {
+    static LongCount jdnToLongCount(int jdn) {
         int total = jdn - Constants.GMT_CORRELATION;
         return new LongCount(
             total / 144000,
@@ -47,7 +47,7 @@ public final class Calculator {
     }
 
     /** JDN → Lord of Night G1–G9 (9-day cycle). */
-    public static String jdnToLordOfNight(int jdn) {
+    static String jdnToLordOfNight(int jdn) {
         return "G" + (Math.floorMod(jdn - Constants.GMT_CORRELATION, 9) + 1);
     }
 
