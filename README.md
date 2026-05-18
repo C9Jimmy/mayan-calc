@@ -12,11 +12,11 @@ Five native language implementations, zero external dependencies, pure arithmeti
 
 | Language   | Install / Dependency                              | Tests |
 |------------|---------------------------------------------------|-------|
-| Python     | `pip install mayan-calc`                          | 31 ✅  |
-| TypeScript | `npm install mayan-calc`                          | 52 ✅  |
-| Java       | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 41 ✅  |
-| C#         | NuGet: `MayanCalc`                                | 43 ✅  |
-| Kotlin     | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 55 ✅  |
+| Python     | `pip install mayan-calc`                          | 38 ✅  |
+| TypeScript | `npm install mayan-calc`                          | 39 ✅  |
+| Java       | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 43 ✅  |
+| C#         | NuGet: `MayanCalc`                                | 49 ✅  |
+| Kotlin     | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`    | 66 ✅  |
 
 ---
 
@@ -78,6 +78,7 @@ println(result.lordOfNight)              // "G1"
 |-------|------|-------------|
 | `tzolkin.coefficient` | int (1–13) | Tzolk'in day coefficient |
 | `tzolkin.name` | string | Tzolk'in day name (e.g. `"Ajaw"`) |
+| `tzolkin.day_sign_number` | int (1–20) | Position in the 20-sign cycle (e.g. `20` for Ajaw) |
 | `haab.day` | int (0–19) | Haab day number |
 | `haab.month_name` | string | Haab month name (e.g. `"K'ank'in"`) |
 | `long_count` | object with `display` | Long Count components and notation (e.g. `display = "13.0.0.0.0"`) |

@@ -12,11 +12,11 @@
 
 | 語言       | 安裝 / 依賴                                           | 測試數 |
 |------------|-------------------------------------------------------|--------|
-| Python     | `pip install mayan-calc`                              | 31 ✅  |
-| TypeScript | `npm install mayan-calc`                              | 52 ✅  |
-| Java       | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`        | 41 ✅  |
-| C#         | NuGet: `MayanCalc`                                    | 43 ✅  |
-| Kotlin     | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`        | 55 ✅  |
+| Python     | `pip install mayan-calc`                              | 38 ✅  |
+| TypeScript | `npm install mayan-calc`                              | 39 ✅  |
+| Java       | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`        | 43 ✅  |
+| C#         | NuGet: `MayanCalc`                                    | 49 ✅  |
+| Kotlin     | JitPack: `io.github.c9jimmy:mayan-calc:0.1.0`        | 66 ✅  |
 
 ---
 
@@ -78,6 +78,7 @@ println(result.lordOfNight)              // "G1"
 |------|------|------|
 | `tzolkin.coefficient` | int (1–13) | 卓爾金曆日係數 |
 | `tzolkin.name` | string | 卓爾金曆日名（如 `"Ajaw"`）|
+| `tzolkin.day_sign_number` | int (1–20) | 日名在 20 個符號序列中的位置（如 Ajaw = `20`）|
 | `haab.day` | int (0–19) | 哈布曆日數 |
 | `haab.month_name` | string | 哈布曆月名（如 `"K'ank'in"`）|
 | `long_count` | object with `display` | 長計曆組成欄位與記法（如 `display = "13.0.0.0.0"`）|
