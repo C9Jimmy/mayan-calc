@@ -20,7 +20,7 @@ class IntegrationTest {
         @Test fun tzolkinDaySignNumber() = assertEquals(20, result.tzolkin.daySignNumber)
         @Test fun haabDay()          = assertEquals(3, result.haab.day)
         @Test fun haabMonth()        = assertEquals("K'ank'in", result.haab.monthName)
-        @Test fun lordOfNight()      = assertEquals("G1", result.lordOfNight)
+        @Test fun lordOfNight()      = assertEquals("G9", result.lordOfNight)
     }
 
     // ── 2000-01-01 ───────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ class IntegrationTest {
         @Test fun tzolkinDaySignNumber() = assertEquals(2, result.tzolkin.daySignNumber)
         @Test fun haabDay()          = assertEquals(10, result.haab.day)
         @Test fun haabMonth()        = assertEquals("K'ank'in", result.haab.monthName)
-        @Test fun lordOfNight()      = assertEquals("G6", result.lordOfNight)
+        @Test fun lordOfNight()      = assertEquals("G5", result.lordOfNight)
     }
 
     // ── 1988-12-07 ───────────────────────────────────────────────────────────
@@ -52,7 +52,7 @@ class IntegrationTest {
         @Test fun tzolkinDaySignNumber() = assertEquals(20, result.tzolkin.daySignNumber)
         @Test fun haabDay()          = assertEquals(3, result.haab.day)
         @Test fun haabMonth()        = assertEquals("Mak", result.haab.monthName)
-        @Test fun lordOfNight()      = assertEquals("G5", result.lordOfNight)
+        @Test fun lordOfNight()      = assertEquals("G4", result.lordOfNight)
     }
 
     // ── 2026-05-15 ───────────────────────────────────────────────────────────
@@ -68,6 +68,6 @@ class IntegrationTest {
         @Test fun tzolkinDaySignNumber() = assertEquals(13, result.tzolkin.daySignNumber)
         @Test fun haabDay()          = assertEquals(6, result.haab.day)
         @Test fun haabMonth()        = assertEquals("Sip", result.haab.monthName)
-        @Test fun lordOfNight()      = assertEquals("G7", result.lordOfNight)
+        @Test fun lordOfNight()      = assertEquals("G6", result.lordOfNight)
     }
 }

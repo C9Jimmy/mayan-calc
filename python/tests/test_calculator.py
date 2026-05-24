@@ -133,16 +133,17 @@ def test_haab_day_range(frankie_jdn):
 # ── jdn_to_lord_of_night ─────────────────────────────────────────────────────
 
 def test_lord_of_night_creation_date(creation_jdn):
-    assert _jdn_to_lord_of_night(creation_jdn) == "G1"
+    assert _jdn_to_lord_of_night(creation_jdn) == "G9"
 
 
 def test_lord_of_night_1988_12_07(frankie_jdn):
-    assert _jdn_to_lord_of_night(frankie_jdn) == "G5"
+    assert _jdn_to_lord_of_night(frankie_jdn) == "G4"
 
 
 def test_lord_of_night_9_day_cycle(creation_jdn):
-    for i in range(9):
-        assert _jdn_to_lord_of_night(creation_jdn + i) == f"G{i + 1}"
+    expected = ("G9", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8")
+    for i, lord in enumerate(expected):
+        assert _jdn_to_lord_of_night(creation_jdn + i) == lord
 
 
 def test_lord_of_night_range(frankie_jdn):
@@ -166,7 +167,7 @@ def test_calculate_1988_12_07():
     assert result.tzolkin.name == "Ajaw"
     assert result.haab.month_name == "Mak"
     assert result.haab.day == 3
-    assert result.lord_of_night == "G5"
+    assert result.lord_of_night == "G4"
 
 
 def test_calculate_creation_date():
@@ -177,3 +178,26 @@ def test_calculate_creation_date():
     assert result.tzolkin.name == "Ajaw"
     assert result.haab.month_name == "Kumk'u"
     assert result.haab.day == 8
+    assert result.lord_of_night == "G9"
+
+
+def test_calculate_accepts_valid_leap_day():
+    result = calculate(2024, 2, 29)
+    assert isinstance(result, MayanDate)
+
+
+def test_calculate_rejects_invalid_dates():
+    invalid_dates = (
+        (2023, 2, 29),
+        (2024, 13, 1),
+        (2024, 0, 10),
+        (2024, 4, 31),
+        (2024, 1, 0),
+    )
+    for year, month, day in invalid_dates:
+        try:
+            calculate(year, month, day)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Expected ValueError for {year}-{month}-{day}")

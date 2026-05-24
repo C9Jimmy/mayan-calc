@@ -21,8 +21,13 @@ class ConstantsTest {
     }
 
     @Test
-    void tzolkinNameOriginIdxIs19() {
-        assertEquals(19, Constants.TZOLKIN_NAME_ORIGIN_IDX);
+    void tzolkinNameOriginIndexIs19() {
+        assertEquals(19, Constants.TZOLKIN_NAME_ORIGIN_INDEX);
+    }
+
+    @Test
+    void lordOfNightOriginIs9() {
+        assertEquals(9, Constants.LORD_OF_NIGHT_ORIGIN);
     }
 
     @Test

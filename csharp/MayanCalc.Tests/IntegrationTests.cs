@@ -5,10 +5,10 @@ namespace MayanCalc.Tests;
 public class IntegrationTests
 {
     [Theory]
-    [InlineData(2012, 12, 21, 4, "Ajaw", 20, 3, "K'ank'in", 13, 0, 0, 0, 0, "13.0.0.0.0", "G1")]
-    [InlineData(2000,  1,  1, 11, "Ik'", 2, 10, "K'ank'in", 12, 19, 6, 15, 2, "12.19.6.15.2", "G6")]
-    [InlineData(1988, 12,  7, 12, "Ajaw", 20, 3, "Mak", 12, 18, 15, 11, 0, "12.18.15.11.0", "G5")]
-    [InlineData(2026,  5, 15,  9, "Ben", 13, 6, "Sip", 13, 0, 13, 10, 13, "13.0.13.10.13", "G7")]
+    [InlineData(2012, 12, 21, 4, "Ajaw", 20, 3, "K'ank'in", 13, 0, 0, 0, 0, "13.0.0.0.0", "G9")]
+    [InlineData(2000,  1,  1, 11, "Ik'", 2, 10, "K'ank'in", 12, 19, 6, 15, 2, "12.19.6.15.2", "G5")]
+    [InlineData(1988, 12,  7, 12, "Ajaw", 20, 3, "Mak", 12, 18, 15, 11, 0, "12.18.15.11.0", "G4")]
+    [InlineData(2026,  5, 15,  9, "Ben", 13, 6, "Sip", 13, 0, 13, 10, 13, "13.0.13.10.13", "G6")]
     public void Calculate_AnchorDates(
         int year, int month, int day,
         int tzCoefficient, string tzName, int tzDaySignNumber,

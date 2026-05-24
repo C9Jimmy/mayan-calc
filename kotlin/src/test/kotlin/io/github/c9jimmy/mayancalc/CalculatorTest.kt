@@ -26,7 +26,7 @@ class CalculatorTest {
             assertEquals(expected, Calculator.dateToJdn(y, m, d))
 
         @Test fun creationDate() =
-            assertEquals(CORRELATION_JDN, Calculator.dateToJdn(-3113, 8, 11))
+            assertEquals(GMT_CORRELATION, Calculator.dateToJdn(-3113, 8, 11))
 
         @Test fun leapYearBranch() =
             assertEquals(2451603L, Calculator.dateToJdn(2000, 2, 28))
@@ -47,7 +47,7 @@ class CalculatorTest {
         @Test fun nameAlwaysInKnownList() {
             for (i in 0 until 260) {
                 val name = Calculator.jdnToTzolkin(FRANKIE_JDN + i).name
-                assertTrue(name in TZOLKIN_NAMES, "Unknown name '$name' at offset $i")
+                assertTrue(name in TZOLKIN_DAY_SIGNS, "Unknown name '$name' at offset $i")
             }
         }
 
@@ -57,13 +57,13 @@ class CalculatorTest {
         }
 
         @Test fun creationDate_coefficientIs4() =
-            assertEquals(4, Calculator.jdnToTzolkin(CORRELATION_JDN).coefficient)
+            assertEquals(4, Calculator.jdnToTzolkin(GMT_CORRELATION).coefficient)
 
         @Test fun creationDate_nameIsAjaw() =
-            assertEquals("Ajaw", Calculator.jdnToTzolkin(CORRELATION_JDN).name)
+            assertEquals("Ajaw", Calculator.jdnToTzolkin(GMT_CORRELATION).name)
 
         @Test fun creationDate_daySignNumberIs20() =
-            assertEquals(20, Calculator.jdnToTzolkin(CORRELATION_JDN).daySignNumber)
+            assertEquals(20, Calculator.jdnToTzolkin(GMT_CORRELATION).daySignNumber)
     }
 
     // ── jdnToHaab ────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ class CalculatorTest {
         }
 
         @Test fun creationDateIs8Kumku() {
-            val haab = Calculator.jdnToHaab(CORRELATION_JDN)
+            val haab = Calculator.jdnToHaab(GMT_CORRELATION)
             assertEquals("Kumk'u", haab.monthName)
             assertEquals(8, haab.day)
         }
@@ -96,32 +96,32 @@ class CalculatorTest {
     inner class LongCountTests {
 
         @Test fun oneUinalIs20Kins() {
-            val lc = Calculator.jdnToLongCount(CORRELATION_JDN + 20)
+            val lc = Calculator.jdnToLongCount(GMT_CORRELATION + 20)
             assertEquals(1, lc.uinal)
             assertEquals(0, lc.kin)
         }
 
         @Test fun oneTunIs18Uinals() {
-            val lc = Calculator.jdnToLongCount(CORRELATION_JDN + 360)
+            val lc = Calculator.jdnToLongCount(GMT_CORRELATION + 360)
             assertEquals(1, lc.tun)
             assertEquals(0, lc.uinal)
             assertEquals(0, lc.kin)
         }
 
         @Test fun oneKatunIs20Tuns() {
-            val lc = Calculator.jdnToLongCount(CORRELATION_JDN + 7200)
+            val lc = Calculator.jdnToLongCount(GMT_CORRELATION + 7200)
             assertEquals(1, lc.katun)
             assertEquals(0, lc.tun)
         }
 
         @Test fun toStringFormat() =
-            assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(CORRELATION_JDN).toString())
+            assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(GMT_CORRELATION).toString())
 
         @Test fun displayFormat() =
-            assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(CORRELATION_JDN).display)
+            assertEquals("0.0.0.0.0", Calculator.jdnToLongCount(GMT_CORRELATION).display)
 
         @Test fun creationDateIsAllZero() {
-            val lc = Calculator.jdnToLongCount(CORRELATION_JDN)
+            val lc = Calculator.jdnToLongCount(GMT_CORRELATION)
             assertEquals(0, lc.baktun)
             assertEquals(0, lc.katun)
             assertEquals(0, lc.tun)
@@ -150,8 +150,30 @@ class CalculatorTest {
             }
         }
 
-        @Test fun creationDateIsG1() =
-            assertEquals("G1", Calculator.jdnToLordOfNight(CORRELATION_JDN))
+        @Test fun creationDateIsG9() =
+            assertEquals("G9", Calculator.jdnToLordOfNight(GMT_CORRELATION))
+    }
+
+    @Nested
+    inner class ValidationTests {
+        @Test fun validLeapDayAccepted() {
+            assertDoesNotThrow { Calculator.calculate(2024, 2, 29) }
+        }
+
+        @Test fun invalidDatesRejected() {
+            val invalidDates = listOf(
+                Triple(2023, 2, 29),
+                Triple(2024, 13, 1),
+                Triple(2024, 0, 10),
+                Triple(2024, 4, 31),
+                Triple(2024, 1, 0)
+            )
+            for ((year, month, day) in invalidDates) {
+                assertThrows(IllegalArgumentException::class.java) {
+                    Calculator.calculate(year, month, day)
+                }
+            }
+        }
     }
 
 }

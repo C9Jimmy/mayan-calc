@@ -1,6 +1,6 @@
 # mayan-calc
 
-馬雅曆法計算函式庫：卓爾金曆（Tzolk'in）、哈布曆（Haab）、長計曆（Long Count）與夜神（Lord of Night）。
+古典瑪雅曆計算函式庫：卓爾金曆（Tzolk'in）、哈布曆（Haab）、長計曆（Long Count）與夜神（Lord of Night）。
 五種原生語言實作，零外部依賴，純整數算術。
 
 [![CI](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml/badge.svg)](https://github.com/C9Jimmy/mayan-calc/actions/workflows/ci.yml)
@@ -32,7 +32,7 @@ print(result.tzolkin.coefficient)      # 4
 print(result.tzolkin.name)             # "Ajaw"
 print(result.haab.day)                 # 3
 print(result.haab.month_name)          # "K'ank'in"
-print(result.lord_of_night)            # "G1"
+print(result.lord_of_night)            # "G9"
 ```
 
 **TypeScript**
@@ -43,7 +43,7 @@ const result = calculate(2012, 12, 21)
 console.log(result.longCount.display)        // "13.0.0.0.0"
 console.log(result.tzolkin.coefficient)      // 4
 console.log(result.tzolkin.name)             // "Ajaw"
-console.log(result.lordOfNight)              // "G1"
+console.log(result.lordOfNight)              // "G9"
 ```
 
 **Java**
@@ -51,7 +51,7 @@ console.log(result.lordOfNight)              // "G1"
 MayanDate result = Calculator.calculate(2012, 12, 21);
 System.out.println(result.longCount().display());   // "13.0.0.0.0"
 System.out.println(result.tzolkin().coefficient()); // 4
-System.out.println(result.lordOfNight());           // "G1"
+System.out.println(result.lordOfNight());           // "G9"
 ```
 
 **C#**
@@ -59,7 +59,7 @@ System.out.println(result.lordOfNight());           // "G1"
 var result = Calculator.Calculate(2012, 12, 21);
 Console.WriteLine(result.LongCount.Display);      // "13.0.0.0.0"
 Console.WriteLine(result.Tzolkin.Coefficient);    // 4
-Console.WriteLine(result.LordOfNight);            // "G1"
+Console.WriteLine(result.LordOfNight);            // "G9"
 ```
 
 **Kotlin**
@@ -67,7 +67,7 @@ Console.WriteLine(result.LordOfNight);            // "G1"
 val result = Calculator.calculate(2012, 12, 21)
 println(result.longCount.display)        // "13.0.0.0.0"
 println(result.tzolkin.coefficient)      // 4
-println(result.lordOfNight)              // "G1"
+println(result.lordOfNight)              // "G9"
 ```
 
 ---
@@ -82,7 +82,7 @@ println(result.lordOfNight)              // "G1"
 | `haab.day` | int (0–19) | 哈布曆日數 |
 | `haab.month_name` | string | 哈布曆月名（如 `"K'ank'in"`）|
 | `long_count` | object with `display` | 長計曆組成欄位與記法（如 `display = "13.0.0.0.0"`）|
-| `lord_of_night` | string | 夜神循環（如 `"G1"`）|
+| `lord_of_night` | string | 夜神循環（如 `"G9"`）|
 
 欄位名稱依循 Python 慣例（`snake_case`）。TypeScript / Kotlin 使用 `camelCase`（`longCount`、`lordOfNight`）；Java 使用 getter（`result.longCount()`）；C# 使用 `PascalCase`（`result.LongCount`）。
 
@@ -96,16 +96,37 @@ println(result.lordOfNight)              // "G1"
 
 | 日期       | Tzolk'in  | Haab         | Long Count    | Lord of Night |
 |------------|-----------|--------------|---------------|---------------|
-| 2012-12-21 | 4 Ajaw    | 3 K'ank'in   | 13.0.0.0.0    | G1   |
-| 2000-01-01 | 11 Ik'    | 10 K'ank'in  | 12.19.6.15.2  | G6   |
-| 1988-12-07 | 12 Ajaw   | 3 Mak        | 12.18.15.11.0 | G5   |
-| 2026-05-15 | 9 Ben     | 6 Sip        | 13.0.13.10.13 | G7   |
+| 2012-12-21 | 4 Ajaw    | 3 K'ank'in   | 13.0.0.0.0    | G9   |
+| 2000-01-01 | 11 Ik'    | 10 K'ank'in  | 12.19.6.15.2  | G5   |
+| 1988-12-07 | 12 Ajaw   | 3 Mak        | 12.18.15.11.0 | G4   |
+| 2026-05-15 | 9 Ben     | 6 Sip        | 13.0.13.10.13 | G6   |
 
 ---
 
 ## 精確度
 
 計算完全基於整數算術，使用 GMT 常數（584283）。長計曆、卓爾金曆、哈布曆與夜神循環均不含浮點誤差。
+
+---
+
+## 日期輸入
+
+輸入日期使用前推公曆。西元前年份採天文年份編號：`year 0` 代表西元前 1 年，
+`year -3113` 代表西元前 3114 年。
+
+無效公曆日期會在進入曆法計算前拋出各語言慣用的範圍錯誤。
+
+---
+
+## 參考資料
+
+- [Smithsonian Maya Calendar Converter](https://maya.nmai.si.edu/calendar/maya-calendar-converter)
+- [Maya Numeration, Computation, and Calendrical Astronomy](https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/maya-numeration-computation-and-calendrical-astronomy)
+- [How to Build a Calendar](https://www.polysyllabic.com/?q=buildacal)
+- [Python Vuh: Mayan Calendrical Mathematics with Python](https://legacy.python.org/workshops/1998-11/proceedings/papers/laningham/laningham.pdf)
+
+以上資料支援古典瑪雅曆錨點 `0.0.0.0.0 = 4 Ajaw 8 Kumk'u G9`
+與 `13.0.0.0.0 = 4 Ajaw 3 K'ank'in G9`。
 
 ---
 
@@ -124,7 +145,7 @@ println(result.lordOfNight)              // "G1"
 ```bibtex
 @software{mayan-calc,
   author  = {C9Jimmy},
-  title   = {mayan-calc: Maya Calendar Calculation Library},
+  title   = {mayan-calc: Classic Maya Calendar Calculation Library},
   year    = {2026},
   url     = {https://github.com/C9Jimmy/mayan-calc},
   license = {MIT}

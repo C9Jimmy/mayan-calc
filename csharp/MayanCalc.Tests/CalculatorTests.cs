@@ -138,7 +138,7 @@ public class CalculatorTests
         [Fact]
         public void OneUinalIs20Kins()
         {
-            var lc = Calculator.JdnToLongCount(Constants.CorrelationJdn + 20);
+            var lc = Calculator.JdnToLongCount(Constants.GmtCorrelation + 20);
             Assert.Equal(1, lc.Uinal);
             Assert.Equal(0, lc.Kin);
         }
@@ -146,7 +146,7 @@ public class CalculatorTests
         [Fact]
         public void OneTunIs18Uinals()
         {
-            var lc = Calculator.JdnToLongCount(Constants.CorrelationJdn + 360);
+            var lc = Calculator.JdnToLongCount(Constants.GmtCorrelation + 360);
             Assert.Equal(1, lc.Tun);
             Assert.Equal(0, lc.Uinal);
             Assert.Equal(0, lc.Kin);
@@ -172,10 +172,10 @@ public class CalculatorTests
     public class LordOfNightTests
     {
         [Theory]
-        [InlineData(2456283, "G1")]  // 2012-12-21 → G1
-        [InlineData(2451545, "G6")]  // 2000-01-01 → G6
-        [InlineData(2447503, "G5")]  // 1988-12-07 → G5
-        [InlineData(2461176, "G7")]  // 2026-05-15 → G7
+        [InlineData(2456283, "G9")]  // 2012-12-21 → G9
+        [InlineData(2451545, "G5")]  // 2000-01-01 → G5
+        [InlineData(2447503, "G4")]  // 1988-12-07 → G4
+        [InlineData(2461176, "G6")]  // 2026-05-15 → G6
         public void AnchorDates(int jdn, string expected)
         {
             Assert.Equal(expected, Calculator.JdnToLordOfNight(jdn));
@@ -200,9 +200,30 @@ public class CalculatorTests
         }
 
         [Fact]
-        public void CreationDateIsG1()
+        public void CreationDateIsG9()
         {
-            Assert.Equal("G1", Calculator.JdnToLordOfNight(Constants.CorrelationJdn));
+            Assert.Equal("G9", Calculator.JdnToLordOfNight(Constants.GmtCorrelation));
+        }
+    }
+
+    public class ValidationTests
+    {
+        [Fact]
+        public void ValidLeapDayIsAccepted()
+        {
+            var exception = Record.Exception(() => Calculator.Calculate(2024, 2, 29));
+            Assert.Null(exception);
+        }
+
+        [Theory]
+        [InlineData(2023, 2, 29)]
+        [InlineData(2024, 13, 1)]
+        [InlineData(2024, 0, 10)]
+        [InlineData(2024, 4, 31)]
+        [InlineData(2024, 1, 0)]
+        public void InvalidDatesAreRejected(int year, int month, int day)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(year, month, day));
         }
     }
 }

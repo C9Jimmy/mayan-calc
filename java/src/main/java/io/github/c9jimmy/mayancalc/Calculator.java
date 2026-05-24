@@ -21,7 +21,7 @@ public final class Calculator {
     static TzolkinDate jdnToTzolkin(int jdn) {
         int kin = Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.TZOLKIN_CYCLE);
         int coefficient = ((kin + Constants.TZOLKIN_COEFF_ORIGIN - 1) % Constants.TZOLKIN_COEFF_COUNT) + 1;
-        int signIdx = (kin + Constants.TZOLKIN_NAME_ORIGIN_IDX) % Constants.TZOLKIN_SIGN_COUNT;
+        int signIdx = (kin + Constants.TZOLKIN_NAME_ORIGIN_INDEX) % Constants.TZOLKIN_SIGN_COUNT;
         return new TzolkinDate(coefficient, Constants.TZOLKIN_DAY_SIGNS.get(signIdx), signIdx + 1);
     }
 
@@ -48,11 +48,36 @@ public final class Calculator {
 
     /** JDN → Lord of Night G1–G9 (9-day cycle). */
     static String jdnToLordOfNight(int jdn) {
-        return "G" + (Math.floorMod(jdn - Constants.GMT_CORRELATION, Constants.LORD_OF_NIGHT_CYCLE) + 1);
+        int total = jdn - Constants.GMT_CORRELATION;
+        int lord = Math.floorMod(total + Constants.LORD_OF_NIGHT_ORIGIN - 1, Constants.LORD_OF_NIGHT_CYCLE) + 1;
+        return "G" + lord;
     }
 
-    /** Gregorian date → complete Maya calendar output. */
+    private static boolean isLeapYear(int year) {
+        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+    }
+
+    private static int daysInMonth(int year, int month) {
+        int[] monthLengths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (month == 2 && isLeapYear(year)) {
+            return 29;
+        }
+        return monthLengths[month - 1];
+    }
+
+    private static void validateDate(int year, int month, int day) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("month must be in 1..12");
+        }
+        int maxDay = daysInMonth(year, month);
+        if (day < 1 || day > maxDay) {
+            throw new IllegalArgumentException("day must be in 1.." + maxDay + " for month " + month);
+        }
+    }
+
+    /** Gregorian date → complete Classic Maya calendar output. */
     public static MayanDate calculate(int year, int month, int day) {
+        validateDate(year, month, day);
         int jdn = dateToJdn(year, month, day);
         return new MayanDate(
             jdnToTzolkin(jdn),

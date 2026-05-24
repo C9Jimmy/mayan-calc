@@ -151,8 +151,35 @@ class CalculatorTest {
         }
 
         @Test
-        void creationDateIsG1() {
-            assertEquals("G1", Calculator.jdnToLordOfNight(Constants.GMT_CORRELATION));
+        void creationDateIsG9() {
+            assertEquals("G9", Calculator.jdnToLordOfNight(Constants.GMT_CORRELATION));
+        }
+    }
+
+    @Nested
+    @DisplayName("calculate — Gregorian date validation")
+    class ValidationTests {
+
+        @Test
+        void validLeapDayIsAccepted() {
+            assertDoesNotThrow(() -> Calculator.calculate(2024, 2, 29));
+        }
+
+        @Test
+        void invalidDatesAreRejected() {
+            int[][] invalidDates = {
+                {2023, 2, 29},
+                {2024, 13, 1},
+                {2024, 0, 10},
+                {2024, 4, 31},
+                {2024, 1, 0}
+            };
+            for (int[] date : invalidDates) {
+                assertThrows(
+                    IllegalArgumentException.class,
+                    () -> Calculator.calculate(date[0], date[1], date[2])
+                );
+            }
         }
     }
 }

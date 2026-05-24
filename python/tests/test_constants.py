@@ -1,9 +1,10 @@
 from mayan_calc.constants import (
     GMT_CORRELATION,
     HAAB_MONTHS,
+    LORD_OF_NIGHT_ORIGIN,
     TZOLKIN_COEFF_ORIGIN,
     TZOLKIN_DAY_SIGNS,
-    TZOLKIN_NAME_ORIGIN_IDX,
+    TZOLKIN_NAME_ORIGIN_INDEX,
 )
 
 
@@ -32,7 +33,11 @@ def test_tzolkin_coefficient_origin_value():
 
 
 def test_tzolkin_name_origin_index_value():
-    assert TZOLKIN_NAME_ORIGIN_IDX == 19
+    assert TZOLKIN_NAME_ORIGIN_INDEX == 19
+
+
+def test_lord_of_night_origin_value():
+    assert LORD_OF_NIGHT_ORIGIN == 9
 
 
 def test_tzolkin_starts_with_imix():
