@@ -1,6 +1,6 @@
 package io.github.c9jimmy.mayancalc;
 
-/** Complete Maya calendar date. Immutable. */
+/** Complete Classic Maya calendar date. Immutable. */
 public record MayanDate(
     TzolkinDate tzolkin,
     HaabDate haab,

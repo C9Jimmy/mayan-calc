@@ -8,7 +8,8 @@ public final class Constants {
     public static final int GMT_CORRELATION = 584283;
 
     public static final int TZOLKIN_COEFF_ORIGIN = 4;
-    public static final int TZOLKIN_NAME_ORIGIN_IDX = 19;
+    public static final int TZOLKIN_NAME_ORIGIN_INDEX = 19;
+    public static final int TZOLKIN_NAME_ORIGIN_IDX = TZOLKIN_NAME_ORIGIN_INDEX;
     public static final int TZOLKIN_CYCLE = 260;
     public static final int TZOLKIN_COEFF_COUNT = 13;
     public static final int TZOLKIN_SIGN_COUNT = 20;
@@ -23,6 +24,7 @@ public final class Constants {
     public static final int LC_TUN = 360;
     public static final int LC_UINAL = 20;
 
+    public static final int LORD_OF_NIGHT_ORIGIN = 9;
     public static final int LORD_OF_NIGHT_CYCLE = 9;
 
     public static final double MEEUS_YEAR_FACTOR = 365.25;

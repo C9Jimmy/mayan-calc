@@ -5,10 +5,12 @@ using System.Collections.Generic;
 
 public static class Constants
 {
-    public const int CorrelationJdn = 584283;
+    public const int GmtCorrelation = 584283;
+    public const int CorrelationJdn = GmtCorrelation;
 
     public const int TzolkinCoeffOrigin = 4;
-    public const int TzolkinNameOriginIdx = 19;
+    public const int TzolkinNameOriginIndex = 19;
+    public const int TzolkinNameOriginIdx = TzolkinNameOriginIndex;
     public const int TzolkinCycle = 260;
     public const int TzolkinCoeffCount = 13;
     public const int TzolkinSignCount = 20;
@@ -23,6 +25,7 @@ public static class Constants
     public const int LcTun = 360;
     public const int LcUinal = 20;
 
+    public const int LordOfNightOrigin = 9;
     public const int LordOfNightCycle = 9;
 
     public const double MeeusYearFactor = 365.25;
@@ -30,7 +33,7 @@ public static class Constants
     public const int MeeusEpochA = 4716;
     public const int MeeusEpochB = 1524;
 
-    public static readonly IReadOnlyList<string> TzolkinNames = Array.AsReadOnly(new[]
+    public static readonly IReadOnlyList<string> TzolkinDaySigns = Array.AsReadOnly(new[]
     {
         "Imix", "Ik'", "Ak'bal", "K'an", "Chikchan",
         "Kimi", "Manik'", "Lamat", "Muluk", "Ok",
@@ -38,11 +41,15 @@ public static class Constants
         "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"
     });
 
-    public static readonly IReadOnlyList<string> HaabMonthNames = Array.AsReadOnly(new[]
+    public static readonly IReadOnlyList<string> TzolkinNames = TzolkinDaySigns;
+
+    public static readonly IReadOnlyList<string> HaabMonths = Array.AsReadOnly(new[]
     {
         "Pop", "Wo", "Sip", "Sotz'", "Sek",
         "Xul", "Yaxk'in", "Mol", "Ch'en", "Yax",
         "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
         "Pax", "K'ayab", "Kumk'u", "Wayeb"
     });
+
+    public static readonly IReadOnlyList<string> HaabMonthNames = HaabMonths;
 }

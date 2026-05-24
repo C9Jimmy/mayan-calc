@@ -11,7 +11,7 @@
         "baktun": 13, "katun": 0, "tun": 0, "uinal": 0, "kin": 0,
         "display": "13.0.0.0.0"
       },
-      "lord_of_night": "G1"
+      "lord_of_night": "G9"
     }
   },
   {
@@ -26,7 +26,7 @@
         "baktun": 12, "katun": 19, "tun": 6, "uinal": 15, "kin": 2,
         "display": "12.19.6.15.2"
       },
-      "lord_of_night": "G6"
+      "lord_of_night": "G5"
     }
   },
   {
@@ -41,7 +41,7 @@
         "baktun": 12, "katun": 18, "tun": 15, "uinal": 11, "kin": 0,
         "display": "12.18.15.11.0"
       },
-      "lord_of_night": "G5"
+      "lord_of_night": "G4"
     }
   },
   {
@@ -56,7 +56,7 @@
         "baktun": 13, "katun": 0, "tun": 13, "uinal": 10, "kin": 13,
         "display": "13.0.13.10.13"
       },
-      "lord_of_night": "G7"
+      "lord_of_night": "G6"
     }
   }
 ]

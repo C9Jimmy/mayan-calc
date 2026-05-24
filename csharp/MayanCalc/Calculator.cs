@@ -16,21 +16,21 @@ public static class Calculator
 
     internal static TzolkinDate JdnToTzolkin(int jdn)
     {
-        int kin = FloorMod(jdn - Constants.CorrelationJdn, Constants.TzolkinCycle);
+        int kin = FloorMod(jdn - Constants.GmtCorrelation, Constants.TzolkinCycle);
         int coefficient = (kin + Constants.TzolkinCoeffOrigin - 1) % Constants.TzolkinCoeffCount + 1;
-        int nameIdx = (kin + Constants.TzolkinNameOriginIdx) % Constants.TzolkinSignCount;
-        return new TzolkinDate(coefficient, Constants.TzolkinNames[nameIdx], nameIdx + 1);
+        int nameIdx = (kin + Constants.TzolkinNameOriginIndex) % Constants.TzolkinSignCount;
+        return new TzolkinDate(coefficient, Constants.TzolkinDaySigns[nameIdx], nameIdx + 1);
     }
 
     internal static HaabDate JdnToHaab(int jdn)
     {
-        int haabKin = FloorMod(jdn - Constants.CorrelationJdn + Constants.HaabCorrelationOffset, Constants.HaabCycle);
-        return new HaabDate(haabKin % Constants.HaabDaysPerMonth, Constants.HaabMonthNames[haabKin / Constants.HaabDaysPerMonth]);
+        int haabKin = FloorMod(jdn - Constants.GmtCorrelation + Constants.HaabCorrelationOffset, Constants.HaabCycle);
+        return new HaabDate(haabKin % Constants.HaabDaysPerMonth, Constants.HaabMonths[haabKin / Constants.HaabDaysPerMonth]);
     }
 
     internal static LongCount JdnToLongCount(int jdn)
     {
-        int total = jdn - Constants.CorrelationJdn;
+        int total = jdn - Constants.GmtCorrelation;
         return new LongCount(
             total / Constants.LcBaktun,
             total % Constants.LcBaktun / Constants.LcKatun,
@@ -41,10 +41,30 @@ public static class Calculator
     }
 
     internal static string JdnToLordOfNight(int jdn) =>
-        $"G{FloorMod(jdn - Constants.CorrelationJdn, Constants.LordOfNightCycle) + 1}";
+        $"G{FloorMod(jdn - Constants.GmtCorrelation + Constants.LordOfNightOrigin - 1, Constants.LordOfNightCycle) + 1}";
+
+    private static bool IsLeapYear(int year) =>
+        year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+
+    private static int DaysInMonth(int year, int month)
+    {
+        int[] monthLengths = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        return month == 2 && IsLeapYear(year) ? 29 : monthLengths[month - 1];
+    }
+
+    private static void ValidateDate(int year, int month, int day)
+    {
+        if (month is < 1 or > 12)
+            throw new System.ArgumentOutOfRangeException(nameof(month), "month must be in 1..12");
+
+        int maxDay = DaysInMonth(year, month);
+        if (day < 1 || day > maxDay)
+            throw new System.ArgumentOutOfRangeException(nameof(day), $"day must be in 1..{maxDay} for month {month}");
+    }
 
     public static MayanDate Calculate(int year, int month, int day)
     {
+        ValidateDate(year, month, day);
         int jdn = DateToJdn(year, month, day);
         return new MayanDate(
             JdnToTzolkin(jdn),

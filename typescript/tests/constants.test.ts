@@ -2,9 +2,10 @@ import { describe, expect, test } from 'vitest'
 import {
   GMT_CORRELATION,
   HAAB_MONTHS,
+  LORD_OF_NIGHT_ORIGIN,
   TZOLKIN_COEFF_ORIGIN,
   TZOLKIN_DAY_SIGNS,
-  TZOLKIN_NAME_ORIGIN_IDX,
+  TZOLKIN_NAME_ORIGIN_INDEX,
 } from '../src/constants'
 
 describe('TZOLKIN_DAY_SIGNS', () => {
@@ -55,7 +56,13 @@ describe('Tzolk\'in origin offsets', () => {
   })
 
   test('matches the canonical name origin index', () => {
-    expect(TZOLKIN_NAME_ORIGIN_IDX).toBe(19)
+    expect(TZOLKIN_NAME_ORIGIN_INDEX).toBe(19)
+  })
+})
+
+describe('Lord of Night origin', () => {
+  test('starts the Long Count epoch at G9', () => {
+    expect(LORD_OF_NIGHT_ORIGIN).toBe(9)
   })
 })
 

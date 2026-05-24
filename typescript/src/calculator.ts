@@ -9,6 +9,7 @@ import {
   LC_TUN,
   LC_UINAL,
   LORD_OF_NIGHT_CYCLE,
+  LORD_OF_NIGHT_ORIGIN,
   MEEUS_EPOCH_A,
   MEEUS_EPOCH_B,
   MEEUS_MONTH_FACTOR,
@@ -16,7 +17,7 @@ import {
   TZOLKIN_COEFF_COUNT,
   TZOLKIN_COEFF_ORIGIN,
   TZOLKIN_DAY_SIGNS,
-  TZOLKIN_NAME_ORIGIN_IDX,
+  TZOLKIN_NAME_ORIGIN_INDEX,
   TZOLKIN_SIGN_COUNT,
 } from './constants'
 import { HaabDate, LongCount, MayanChart, TzolkinDate } from './models'
@@ -38,13 +39,13 @@ function dateToJdn(year: number, month: number, day: number): number {
  *
  * Offsets align with archaeological consensus: creation date 0.0.0.0.0 = 4 Ajaw.
  * TZOLKIN_COEFF_ORIGIN - 1 on number: total=0 → 4 (not 1).
- * TZOLKIN_NAME_ORIGIN_IDX on sign: total=0 → Ajaw at index 19.
+ * TZOLKIN_NAME_ORIGIN_INDEX on sign: total=0 → Ajaw at index 19.
  * Double-modulo guards against pre-epoch dates where total < 0.
  */
 function jdnToTzolkin(jdn: number): TzolkinDate {
   const total = jdn - GMT_CORRELATION
   const number = (((total + TZOLKIN_COEFF_ORIGIN - 1) % TZOLKIN_COEFF_COUNT) + TZOLKIN_COEFF_COUNT) % TZOLKIN_COEFF_COUNT + 1
-  const signIdx = (((total + TZOLKIN_NAME_ORIGIN_IDX) % TZOLKIN_SIGN_COUNT) + TZOLKIN_SIGN_COUNT) % TZOLKIN_SIGN_COUNT
+  const signIdx = (((total + TZOLKIN_NAME_ORIGIN_INDEX) % TZOLKIN_SIGN_COUNT) + TZOLKIN_SIGN_COUNT) % TZOLKIN_SIGN_COUNT
   return {
     coefficient: number,
     name: TZOLKIN_DAY_SIGNS[signIdx],
@@ -87,11 +88,35 @@ function jdnToLongCount(jdn: number): LongCount {
 /** JDN → Lord of Night G1–G9 (9-day cycle). */
 function jdnToLordOfNight(jdn: number): string {
   const total = jdn - GMT_CORRELATION
-  return `G${((total % LORD_OF_NIGHT_CYCLE) + LORD_OF_NIGHT_CYCLE) % LORD_OF_NIGHT_CYCLE + 1}`
+  return `G${((total + LORD_OF_NIGHT_ORIGIN - 1) % LORD_OF_NIGHT_CYCLE + LORD_OF_NIGHT_CYCLE) % LORD_OF_NIGHT_CYCLE + 1}`
 }
 
-/** Gregorian date → complete Maya calendar output. */
+function isLeapYear(year: number): boolean {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+}
+
+function daysInMonth(year: number, month: number): number {
+  const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] as const
+  if (month === 2 && isLeapYear(year)) return 29
+  return monthLengths[month - 1]
+}
+
+function validateDate(year: number, month: number, day: number): void {
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) {
+    throw new RangeError('year, month, and day must be integers')
+  }
+  if (month < 1 || month > 12) {
+    throw new RangeError('month must be in 1..12')
+  }
+  const maxDay = daysInMonth(year, month)
+  if (day < 1 || day > maxDay) {
+    throw new RangeError(`day must be in 1..${maxDay} for month ${month}`)
+  }
+}
+
+/** Gregorian date → complete Classic Maya calendar output. */
 export function calculate(year: number, month: number, day: number): MayanChart {
+  validateDate(year, month, day)
   const jdn = dateToJdn(year, month, day)
   return {
     tzolkin: jdnToTzolkin(jdn),

@@ -9,6 +9,7 @@ from mayan_calc.constants import (
     LC_TUN,
     LC_UINAL,
     LORD_OF_NIGHT_CYCLE,
+    LORD_OF_NIGHT_ORIGIN,
     MEEUS_EPOCH_A,
     MEEUS_EPOCH_B,
     MEEUS_MONTH_FACTOR,
@@ -17,7 +18,7 @@ from mayan_calc.constants import (
     TZOLKIN_COEFF_ORIGIN,
     TZOLKIN_CYCLE,
     TZOLKIN_DAY_SIGNS,
-    TZOLKIN_NAME_ORIGIN_IDX,
+    TZOLKIN_NAME_ORIGIN_INDEX,
     TZOLKIN_SIGN_COUNT,
 )
 from mayan_calc.models import HaabDate, LongCount, MayanDate, TzolkinDate
@@ -37,11 +38,11 @@ def _jdn_to_tzolkin(jdn: int) -> TzolkinDate:
     Offsets align with the archaeological consensus: Maya creation date
     0.0.0.0.0 (JDN 584283) = 4 Ajaw.
     TZOLKIN_COEFF_ORIGIN - 1 on number: kin=0 → 4 (not 1).
-    TZOLKIN_NAME_ORIGIN_IDX on sign: kin=0 → Ajaw at index 19.
+    TZOLKIN_NAME_ORIGIN_INDEX on sign: kin=0 → Ajaw at index 19.
     """
     kin = (jdn - GMT_CORRELATION) % TZOLKIN_CYCLE
     number = ((kin + TZOLKIN_COEFF_ORIGIN - 1) % TZOLKIN_COEFF_COUNT) + 1
-    sign_idx = (kin + TZOLKIN_NAME_ORIGIN_IDX) % TZOLKIN_SIGN_COUNT
+    sign_idx = (kin + TZOLKIN_NAME_ORIGIN_INDEX) % TZOLKIN_SIGN_COUNT
     return TzolkinDate(
         coefficient=number,
         name=TZOLKIN_DAY_SIGNS[sign_idx],
@@ -79,11 +80,33 @@ def _jdn_to_long_count(jdn: int) -> LongCount:
 
 def _jdn_to_lord_of_night(jdn: int) -> str:
     """JDN → Lord of Night G1–G9 (9-day cycle)."""
-    return f"G{((jdn - GMT_CORRELATION) % LORD_OF_NIGHT_CYCLE) + 1}"
+    total = jdn - GMT_CORRELATION
+    lord = ((total + LORD_OF_NIGHT_ORIGIN - 1) % LORD_OF_NIGHT_CYCLE) + 1
+    return f"G{lord}"
+
+
+def _is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+def _days_in_month(year: int, month: int) -> int:
+    month_lengths = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    if month == 2 and _is_leap_year(year):
+        return 29
+    return month_lengths[month - 1]
+
+
+def _validate_date(year: int, month: int, day: int) -> None:
+    if not 1 <= month <= 12:
+        raise ValueError("month must be in 1..12")
+    max_day = _days_in_month(year, month)
+    if not 1 <= day <= max_day:
+        raise ValueError(f"day must be in 1..{max_day} for month {month}")
 
 
 def calculate(year: int, month: int, day: int) -> MayanDate:
-    """Gregorian date → complete Maya calendar output."""
+    """Gregorian date → complete Classic Maya calendar output."""
+    _validate_date(year, month, day)
     jdn = _date_to_jdn(year, month, day)
     return MayanDate(
         tzolkin=_jdn_to_tzolkin(jdn),

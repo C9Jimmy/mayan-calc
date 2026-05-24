@@ -7,21 +7,22 @@ import org.junit.jupiter.api.Test
 @DisplayName("Constants")
 class ConstantsTest {
 
-    @Test fun gmtCorrelationIs584283() = assertEquals(584283L, CORRELATION_JDN)
+    @Test fun gmtCorrelationIs584283() = assertEquals(584283L, GMT_CORRELATION)
 
     @Test fun tzolkinCoeffOriginIs4() = assertEquals(4, TZOLKIN_COEFF_ORIGIN)
-    @Test fun tzolkinNameOriginIdxIs19() = assertEquals(19, TZOLKIN_NAME_ORIGIN_IDX)
+    @Test fun tzolkinNameOriginIndexIs19() = assertEquals(19, TZOLKIN_NAME_ORIGIN_INDEX)
+    @Test fun lordOfNightOriginIs9() = assertEquals(9, LORD_OF_NIGHT_ORIGIN)
 
-    @Test fun tzolkinNamesHas20Elements() = assertEquals(20, TZOLKIN_NAMES.size)
-    @Test fun tzolkinFirstNameIsImix() = assertEquals("Imix", TZOLKIN_NAMES[0])
-    @Test fun tzolkinLastNameIsAjaw() = assertEquals("Ajaw", TZOLKIN_NAMES[19])
-    @Test fun tzolkinOriginNameIsAjaw() = assertEquals("Ajaw", TZOLKIN_NAMES[TZOLKIN_NAME_ORIGIN_IDX])
-    @Test fun tzolkinNamesHaveNoBlankEntries() = assertTrue(TZOLKIN_NAMES.none { it.isBlank() })
+    @Test fun tzolkinNamesHas20Elements() = assertEquals(20, TZOLKIN_DAY_SIGNS.size)
+    @Test fun tzolkinFirstNameIsImix() = assertEquals("Imix", TZOLKIN_DAY_SIGNS[0])
+    @Test fun tzolkinLastNameIsAjaw() = assertEquals("Ajaw", TZOLKIN_DAY_SIGNS[19])
+    @Test fun tzolkinOriginNameIsAjaw() = assertEquals("Ajaw", TZOLKIN_DAY_SIGNS[TZOLKIN_NAME_ORIGIN_INDEX])
+    @Test fun tzolkinNamesHaveNoBlankEntries() = assertTrue(TZOLKIN_DAY_SIGNS.none { it.isBlank() })
 
-    @Test fun haabMonthNamesHas19Elements() = assertEquals(19, HAAB_MONTH_NAMES.size)
-    @Test fun haabFirstMonthIsPop() = assertEquals("Pop", HAAB_MONTH_NAMES[0])
-    @Test fun haabLastMonthIsWayeb() = assertEquals("Wayeb", HAAB_MONTH_NAMES[18])
-    @Test fun haabMonthNamesHaveNoBlankEntries() = assertTrue(HAAB_MONTH_NAMES.none { it.isBlank() })
+    @Test fun haabMonthNamesHas19Elements() = assertEquals(19, HAAB_MONTHS.size)
+    @Test fun haabFirstMonthIsPop() = assertEquals("Pop", HAAB_MONTHS[0])
+    @Test fun haabLastMonthIsWayeb() = assertEquals("Wayeb", HAAB_MONTHS[18])
+    @Test fun haabMonthNamesHaveNoBlankEntries() = assertTrue(HAAB_MONTHS.none { it.isBlank() })
 
     @Test
     fun tzolkinNamesFullOrder() {
@@ -31,7 +32,7 @@ class ConstantsTest {
             "Chuwen", "Eb", "Ben", "Hix", "Men",
             "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"
         )
-        assertEquals(expected, TZOLKIN_NAMES)
+        assertEquals(expected, TZOLKIN_DAY_SIGNS)
     }
 
     @Test
@@ -42,6 +43,6 @@ class ConstantsTest {
             "Sak", "Keh", "Mak", "K'ank'in", "Muwan",
             "Pax", "K'ayab", "Kumk'u", "Wayeb"
         )
-        assertEquals(expected, HAAB_MONTH_NAMES)
+        assertEquals(expected, HAAB_MONTHS)
     }
 }

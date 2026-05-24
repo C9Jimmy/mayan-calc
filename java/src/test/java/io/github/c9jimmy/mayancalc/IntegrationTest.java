@@ -39,7 +39,7 @@ class IntegrationTest {
 
         @Test
         void lordOfNight() {
-            assertEquals("G1", result.lordOfNight());
+            assertEquals("G9", result.lordOfNight());
         }
     }
 
@@ -70,7 +70,7 @@ class IntegrationTest {
 
         @Test
         void lordOfNight() {
-            assertEquals("G6", result.lordOfNight());
+            assertEquals("G5", result.lordOfNight());
         }
     }
 
@@ -101,7 +101,7 @@ class IntegrationTest {
 
         @Test
         void lordOfNight() {
-            assertEquals("G5", result.lordOfNight());
+            assertEquals("G4", result.lordOfNight());
         }
     }
 
@@ -132,7 +132,7 @@ class IntegrationTest {
 
         @Test
         void lordOfNight() {
-            assertEquals("G7", result.lordOfNight());
+            assertEquals("G6", result.lordOfNight());
         }
     }
 }

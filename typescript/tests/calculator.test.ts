@@ -22,7 +22,7 @@ describe('calculate', () => {
       kin: 0,
       display: '13.0.0.0.0',
     })
-    expect(result.lordOfNight).toBe('G1')
+    expect(result.lordOfNight).toBe('G9')
   })
 
   test('2000-01-01 returns canonical Maya date', () => {
@@ -38,7 +38,7 @@ describe('calculate', () => {
       monthName: "K'ank'in",
     })
     expect(result.longCount.display).toBe('12.19.6.15.2')
-    expect(result.lordOfNight).toBe('G6')
+    expect(result.lordOfNight).toBe('G5')
   })
 
   test('1988-12-07 returns canonical Maya date', () => {
@@ -54,7 +54,7 @@ describe('calculate', () => {
       monthName: 'Mak',
     })
     expect(result.longCount.display).toBe('12.18.15.11.0')
-    expect(result.lordOfNight).toBe('G5')
+    expect(result.lordOfNight).toBe('G4')
   })
 
   test('2026-05-15 returns canonical Maya date', () => {
@@ -70,6 +70,24 @@ describe('calculate', () => {
       monthName: 'Sip',
     })
     expect(result.longCount.display).toBe('13.0.13.10.13')
-    expect(result.lordOfNight).toBe('G7')
+    expect(result.lordOfNight).toBe('G6')
+  })
+
+  test('accepts valid leap day', () => {
+    expect(() => calculate(2024, 2, 29)).not.toThrow()
+  })
+
+  test('rejects invalid Gregorian dates', () => {
+    const invalidDates = [
+      [2023, 2, 29],
+      [2024, 13, 1],
+      [2024, 0, 10],
+      [2024, 4, 31],
+      [2024, 1, 0],
+    ] as const
+
+    for (const [year, month, day] of invalidDates) {
+      expect(() => calculate(year, month, day)).toThrow(RangeError)
+    }
   })
 })
